@@ -23,7 +23,7 @@ CATEGORICAL_COLUMNS = ['Gender', 'Contract', 'PaymentMethod'] #문자 컬럼
 NUMERIC_COLUMNS     = ['Age', 'Tenure', 'MonthlyCharges', 'TotalCharges'] #숫자 컬럼
 DROP_COLUMNS        = ['CustomerID'] # 학습제외 컬럼
 TARGET_COLUMN       = 'Churn'
-DATA_PATH           = 'synthetic_customer_churn_100k.csv' # 경로 변경시 여겨서 수정
+DATA_PATH           = ' ../../data/synthetic_customer_churn_100k.csv' # 경로 변경시 여겨서 수정
 
 
 #1. 전처리 파이프라인 구성
