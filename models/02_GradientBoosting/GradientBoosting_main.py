@@ -6,13 +6,11 @@ GradientBoosting2 실행 파일
 전처리는 한 번만 수행하고, 같은 train/test 데이터로 튜닝과 최종 학습을 이어서 실행합니다.
 """
 
-from __future__ import annotations
-
 import GradientBoosting_pipeline_01_preprocessing as pipe1
 import GradientBoosting_pipeline_02_training as pipe2
 
 
-def main() -> None:
+def main():
     """
     GradientBoosting2 전체 파이프라인을 실행합니다.
 

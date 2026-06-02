@@ -57,7 +57,7 @@ def add_gradient_boosting_features(df: pd.DataFrame) -> pd.DataFrame:
     )
 
     numeric_columns = df.select_dtypes(include=[np.number]).columns
-    df[numeric_columns] = df[numeric_columns].replace([np.inf, -np.inf], np.nan).csv
+    df[numeric_columns] = df[numeric_columns].replace([np.inf, -np.inf], np.nan)
 
     return df
 
