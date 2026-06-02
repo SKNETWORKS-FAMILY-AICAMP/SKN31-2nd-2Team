@@ -68,10 +68,6 @@
 | **MonthlyCharges** (월요금) | 79.9달러 | 80.0달러 | 10.0달러 | 150.0달러 | 최소 10달러~최대 150달러 사이에서 균등하게 청구되고 있습니다. |
 | **TotalCharges** (총요금) | 2,926.1달러 | 2,268.0달러 | **-118.43달러** | 10,831.5달러 | **[오류 발견]** **최솟값이 음수(-118.43)** 인 데이터가 존재합니다. |
 
-### ⚠️ 중요 데이터 오류 파악
-* **TotalCharges의 음수(-) 값:** 총 청구 금액에 마이너스 값이 잡혀 있습니다. 이는 환불, 프로모션 크레딧 또는 시스템 기록 오류일 수 있으므로 **0 이하의 값은 0으로 대체하거나 해당 행을 제거하는 전처리**가 필요합니다.
-* **데이터의 치우침 (Skewness):** `TotalCharges`는 평균(2,926)이 중위값(2,268)보다 확연히 높습니다. 이는 대다수 고객은 적은 금액을 내지만, 장기 가입자 중 일부 헤비 유저가 큰 금액을 지불하여 **오른쪽 꼬리가 긴(Right-skewed) 분포**를 형성하고 있음을 뜻합니다.
-
 ---
 
 ## 3. 타겟 변수(Churn) 분포 분석
@@ -84,7 +80,7 @@
 * **이탈한 고객 (Yes):** 33,144명 (**33.14%**)
 
 ### 💡 클래스 불균형 분석
-일반적인 기업의 이탈 데이터는 이탈자 비율이 5~10% 미만인 극심한 불균형 데이터가 많으나, 본 데이터는 이탈률이 **약 33%** 로 꽤 높은 편입니다. 따라서 모델 학습 시 적절한 불균형 전처리를 적용함으로써 모델이 안정적으로 이탈 패턴을 학습할 수 있는 환경을 만들어 주는 것이 좋습니다.
+일반적인 기업의 이탈 데이터는 이탈자 비율이 5~10% 미만인 극심한 불균형 데이터가 많으나, 본 데이터는 이탈률이 **약 33%** 로 꽤 높은 편입니다. 따라서 모델 학습 시 적절한 불균형 전처리를 적용함으로써 모델이 안정적으로 이탈 패턴을 학습할 수 있는 환경을 만들어 주는 것이 필요합니다.
 
 ---
 
@@ -99,22 +95,58 @@
 ![상관관계](eda_plots/04_correlation_matrix.png)
 
 * **다중공선성(Multicollinearity) 확인:** `TotalCharges`(총 청구액)는 `Tenure`(가입 기간) 및 `MonthlyCharges`(월 청구액)와 매우 강한 양의 상관관계를 보입니다. (논리 공식인 $TotalCharges \approx Tenure \times MonthlyCharges$가 성립함을 보여줌.)
-* **모델 연계:** Random Forest, Gradient Boosting, XGBoost, LightGBM은 트리 기반 앙상블 모델이기 때문에 성능(예측력) 자체에는 거의 영향이 없습니다.  하지만 변수중요도 분석을 해야한다면 높은 상관관계의 변수를 제거하는 것이 좋습니다.  Deep Learning은 수학적으로 경사하강법(Gradient Descent)과 가중치 연산을 사용하기 때문에 성능과 학습 안정성에 직접적인 타격을 받을 수 있습니다.  따라서 높은 상관관계의 변수를 제거하거나 강력한 규제를 가하는 것이 좋습니다.
+* **모델 연계:** Random Forest, Gradient Boosting, XGBoost, LightGBM은 트리 기반 앙상블 모델이기 때문에 성능(예측력) 자체에는 거의 영향이 없습니다.  하지만 변수중요도 분석을 해야한다면 높은 상관관계의 변수를 제거하는 것이 좋습니다.  Deep Learning은 수학적으로 경사하강법(Gradient Descent)과 가중치 연산을 사용하기 때문에 성능과 학습 안정성에 직접적인 타격을 받을 수 있습니다.  따라서 높은 상관관계의 변수를 제거하거나 강력한 규제를 가하는 것이 필요합니다.
 ---
 
-## 5. EDA 결론 및 전처리 전략
+## 5. 데이터 전처리
 
-EDA를 통해 도출된 인사이트를 바탕으로, **모델 성능을 극대화하기 위한 4가지 핵심 전처리 전략**은 다음과 같습니다.
+1. **이상치 처리**
+   - `TotalCharges` 열에서 발견된 음수(-) 값을 0으로 대체
+   - 총 100,000개 중 265개의 음수(-)을 0으로 대체
 
-1. **이상치 및 데이터 오류 처리**
-   * `TotalCharges` 열에서 발견된 음수 값(`-118.43`)들을 제거하거나 `0`으로 채워주는 이상치 정제 작업을 필수로 진행합니다.
-2. **범주형 변수의 인코딩(Encoding)**
-   * `Gender`, `Contract`, `PaymentMethod` 등 문자열 범주형 데이터는 숫자로 바꿔야 모델이 이해할 수 있습니다.
-   * 따라서 적절한 인코딩을 진행합니다.
-3. **데이터 스케일링(Scaling) 생략 가능**
-   * `Age`(수십 단위)와 `TotalCharges`(만 단위)는 스케일 차이가 매우 큽니다.
-   * 트리 기반 앙상블 모델은 값의 절대적 크기가 아닌 '대소 관계(Rank)'를 기준으로 데이터를 쪼개기 때문에 스케일링 전처리를 생략할 수 있습니다.
-4. **파생 변수(Feature Engineering) 추천**
-   * 고객의 가입 기간 대비 총 지불 금액의 비율을 나타내는 `TotalCharges / Tenure` (즉, 실제 인당 평균 월 지불 가치) 등의 파생 변수를 추가하면 이탈 모델의 예측력을 더욱 날카롭게 끌어올릴 수 있을 것입니다.
+2. **변수 분리 및 인코딩(Encoding)**  
+- feature와 target 분리(X, y 분리)
+   - 총 컬럼(9개): CustomerID, Age, Gender, Tenure, MonthlyCharges, Contract, PaymentMethod, TotalCharges, Churn
+   - feature(7개): Age, Gender, Tenure, MonthlyCharges, Contract, PaymentMethod, TotalCharges<br>
+   - categorical_columns = ['Gender', 'Contract', 'PaymentMethod']<br>
+   - numeric_columns = ['Tenure', 'MonthlyCharges', 'TotalCharges', 'Age']
 
----
+- target(1개): Churn
+   - target은 LabelEncoding을 통해 Yes를 0으로 , No를 1로 변환
+
+   | 구분 | 레이블 | 의미 | 건수 |
+   |------|--------|------|-----:|
+   | 변환 전 | No | 유지 | 66,856 |
+   | 변환 전 | Yes | 이탈 | 33,144 |
+   | 변환 후 | 0 | 유지 | 66,856 |
+   | 변환 후 | 1 | 이탈 | 33,144 |
+
+3. **train/validation/test set 분리**
+
+- train set(60%), validation set(20%), test set(20%)로 분리하여 데이터 준비
+
+   | 변수 | 크기 |
+   |------|-----:|
+   | X_train | 60,000 |
+   | y_train | 60,000 |
+   | X_val | 20,000 |
+   | y_val | 20,000 |
+   | X_test | 20,000 |
+   | y_test | 20,000 |
+
+4. **데이터 스케일링(Scaling) 생략 가능**
+- Random Forest, Gradient Boosting, XGBoost, LightGBM은 트리 기반 앙상블 모델을 사용하였으므로 수치형(numeric) 변수에 대해서는 별도의 Scaling을 하지 않음  
+
+- 머신러닝 Encoding과 Scaling 정리  
+
+   | 척도 | | 선형 알고리즘 | 트리 알고리즘 |
+   |---|---|---|---|
+   | 범주형 | 명목척도 | `OneHotEncoder(drop='')` | `OneHotEncoder -> LabelEncoder()` |
+   | 범주형 | 순서척도 | `LabelEncoder()` | `LabelEncoder())` |
+   | 수치형 | 간격척도 | Scaling 필요 | Scaling 불필요 |
+   | 수치형 | 비율척도 | Scaling 필요 | Scaling 불필요 |
+
+5. **파생 변수(Feature Engineering) 추가**
+   * 고객의 가입 기간 대비 총 지불 금액의 비율을 나타내는 `TotalCharges / Tenure` (즉, 실제 인당 평균 월 지불 가치) 등의 파생 변수를 추가하면 이탈 모델의 예측력을 높일 수 있을 것으로 예상합니다.
+
+## 6. 모델 학습 결과
