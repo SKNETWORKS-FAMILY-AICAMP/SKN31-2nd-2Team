@@ -1,7 +1,7 @@
-# GradientBoosting2_pipeline_02_training.py
+# GradientBoosting_pipeline_02_training.py
 # -*- coding: utf-8 -*-
 """
-GradientBoosting2 모델 구성, 튜닝, 학습, 평가 모듈.
+GradientBoosting 모델 구성, 튜닝, 학습, 평가 모듈.
 
 전처리와 모델을 sklearn Pipeline으로 묶기 위해 ColumnTransformer와 Pipeline을 사용합니다.
 """
@@ -80,7 +80,7 @@ def run_parameter_tuning(
     y_test: pd.Series,
 ) -> Optional[pd.DataFrame]:
     """
-    같은 train/test 데이터에서 GradientBoosting2 파라미터 조합을 검증합니다.
+    같은 train/test 데이터에서 GradientBoosting 파라미터 조합을 검증합니다.
 
     Args:
         X_train (pd.DataFrame): 학습용 피처 데이터.
@@ -152,7 +152,7 @@ def run_parameter_tuning(
     top_10_results.index.name = "Rank"
 
     print("-------------------------------------------------------------------------")
-    print("GradientBoosting2 하이퍼파라미터 튜닝 상위 10개 결과")
+    print("GradientBoosting 하이퍼파라미터 튜닝 상위 10개 결과")
     print("-------------------------------------------------------------------------")
     print(top_10_results.to_string())
     print("-------------------------------------------------------------------------")
@@ -213,7 +213,7 @@ def save_feature_importance(model_pipeline: Pipeline, output_filename: str) -> N
         hue="Feature",
         legend=False,
     )
-    plt.title("GradientBoosting2 Feature Importance for Churn Prediction", fontsize=14)
+    plt.title("GradientBoosting Feature Importance for Churn Prediction", fontsize=14)
     plt.tight_layout()
 
     output_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), output_filename)
@@ -230,7 +230,7 @@ def run_model_training_and_evaluation(
     best_params: Optional[Params] = None,
 ) -> Metrics:
     """
-    최적 파라미터로 GradientBoosting2 Pipeline을 학습하고 평가합니다.
+    최적 파라미터로 GradientBoosting Pipeline을 학습하고 평가합니다.
 
     Args:
         X_train (pd.DataFrame): 학습용 피처 데이터.
@@ -249,14 +249,14 @@ def run_model_training_and_evaluation(
     model_pipeline = build_model_pipeline(X_train, best_params)
     sample_weight = compute_sample_weight(class_weight="balanced", y=y_train)
     model_pipeline.fit(X_train, y_train, model__sample_weight=sample_weight)
-    print(f"GradientBoosting2 Pipeline 학습 완료: {best_params or '기본값'}")
+    print(f"GradientBoosting Pipeline 학습 완료: {best_params or '기본값'}")
 
     y_train_pred = model_pipeline.predict(X_train)
     y_train_proba = model_pipeline.predict_proba(X_train)[:, 1]
     y_pred = model_pipeline.predict(X_test)
     y_pred_proba = model_pipeline.predict_proba(X_test)[:, 1]
 
-    print("\n------------------ [ GradientBoosting2 모델 평가 결과 ] ------------------")
+    print("\n------------------ [ GradientBoosting 모델 평가 결과 ] ------------------")
     print(f"1. 정확도(Accuracy): {accuracy_score(y_test, y_pred):.4f}")
     print(f"2. ROC-AUC 점수    : {roc_auc_score(y_test, y_pred_proba):.4f}")
     print("\n3. 분류 리포트(Classification Report):")

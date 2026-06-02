@@ -1,7 +1,7 @@
-# GradientBoosting2_pipeline_01_preprocessing.py
+# GradientBoosting_pipeline_01_preprocessing.py
 # -*- coding: utf-8 -*-
 """
-GradientBoosting2 데이터 로드 및 기본 전처리.
+GradientBoosting 데이터 로드 및 기본 전처리.
 
 범주형 인코딩은 모델 Pipeline 안의 ColumnTransformer가 담당합니다.
 """
