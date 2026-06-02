@@ -232,14 +232,6 @@ optimizer = torch.optim.Adam
 | F1-Score | Random Forest | 0.7200 |
 | ROC-AUC | Random Forest | 0.8069 |
 
-<br />
-
-**3) 튜닝모델 실행시간**
-
-| 최고 모델 | 실행시간 |
-| --- | ---: |
-| LightGBM | 1.96초 |
-
 ---
 
 ### 4-4. 최적 모델 선정
