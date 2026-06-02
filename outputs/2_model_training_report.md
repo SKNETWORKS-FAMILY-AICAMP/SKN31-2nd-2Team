@@ -234,7 +234,7 @@ optimizer = torch.optim.Adam
 
 ---
 
-### 4-4. 최적 모델 선정
+### 4-3. 최적 모델 선정
 
 **선정 모델**: LightGBM
 
