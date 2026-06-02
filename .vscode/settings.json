@@ -1,0 +1,5 @@
+{
+    "python.analysis.extraPaths": [
+        "./models/04_LightGBM"
+    ]
+}

@@ -21,7 +21,7 @@ try:
     import LightGBM_02_training as pipe2
     import LightGBM_03_tuning as pipe3
 except ImportError:
-    st.error("❌ 'LightGBM_01_preprocessing.py', 'LightGBM_02_training.py', 'LightGBM_03_tuning.py' 파일이 같은 폴더에 있어야 합니다.")
+    st.error("❌ 'LightGBM_01_preprocessing.py', 'LightGBM_02_training.py', 'LightGBM_03_tuning.py' 파일을 찾을 수 없습니다.")
     st.stop()
 
 # 스트림릿 페이지 설정 (상단 타이틀 및 레이아웃)
@@ -41,8 +41,7 @@ st.sidebar.markdown("---")
 st.sidebar.info("본 시스템은 LightGBM 모델 기반의 고객 이탈 예측 솔루션입니다.")
 
 # 데이터 세트 경로 정의
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-DATA_PATH = os.path.join(BASE_DIR, 'synthetic_customer_churn_100k.csv')
+DATA_PATH = 'data/synthetic_customer_churn_100k.csv'
 
 
 # -------------------------------------------------------------------------
