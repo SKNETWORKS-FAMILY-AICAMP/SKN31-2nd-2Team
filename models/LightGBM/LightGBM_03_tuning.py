@@ -18,7 +18,7 @@ warnings.filterwarnings('ignore')
 
 # 전처리 파일 (01_preprocessing.py) 가져오기
 try:
-    from models.LightGBM import LightGBM_01_preprocessing as pipe1
+    import LightGBM_01_preprocessing as pipe1
 except ImportError:
     # 전처리 파일이 없을 때 오류 메세지 노출
     print("[오류] 'LightGBM_01_preprocessing.py' 파일이 동일한 폴더에 있어야 합니다.")

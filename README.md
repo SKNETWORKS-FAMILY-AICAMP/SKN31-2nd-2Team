@@ -1,5 +1,7 @@
 # SKN31-2nd-2Team
 
+## 팀원 및 역할
+
 
 **프로젝트 명:** 고객 이탈(Churn) 예측 모델 구축을 위한 데이터 탐색
 
@@ -9,7 +11,6 @@
 본 프로젝트는 Telco 유저들의 이용 행태 및 결제 데이터를 분석하여, 향후 서비스 탈퇴(이탈) 가능성이 높은 사용자를 예측하는 머신러닝 모델 개발 프로젝트입니다. 데이터 전처리, 탐색적 데이터 분석(EDA), 그리고 예측 모델링 과정을 포함하고 있습니다.
 
 ---
-
 ## 저장소 구조 (Repository Structure)
 
 ```
@@ -43,8 +44,8 @@ SKN31-2nd-2Team
 │  │  ├─ gb_feature_importance.png              # GradientBoosting 특성 중요도 이미지
 │  │  ├─ gb_tuning_top10_results.csv            # GradientBoosting 하이퍼파라미터 튜닝 상위 10개 결과 csv
 │  │  ├─ GradientBoosting_main.py      
-│  │  ├─ GradientBoosting_pipeline_01_preprocessing.py   #  GradientBoosting 전처리 모듈
-│  │  └─ GradientBoosting_pipeline_02_training.py     #  GradientBoosting 학습, 검증, 평가 모듈
+│  │  ├─ GradientBoosting_01_preprocessing.py   #  GradientBoosting 전처리 모듈
+│  │  └─ GradientBoosting_02_training.py     #  GradientBoosting 학습, 검증, 평가 모듈
 │  ├─ 03_XGBoost                                # XGBoost 모델링 데이터
 │  │  ├─ app.py
 │  │  ├─ data_scaling.py
@@ -188,14 +189,15 @@ SKN31-2nd-2Team
 ## 8. 데이터 전처리
 
 1. **이상치 처리**
-   - `TotalCharges` 열에서 발견된 음수(-) 값을 0으로 대체
+   - `TotalCharges` 열에서 음수(-)값이 발견됨
+   - 총 지불 금액은 음수가 없을 것으로 판단함
    - 총 100,000개 중 265개의 음수(-)을 0으로 대체
 
 2. **변수 분리 및 인코딩(Encoding)**  
 - feature와 target 분리(X, y 분리)
    - 총 컬럼(9개): CustomerID, Age, Gender, Tenure, MonthlyCharges, Contract, PaymentMethod, TotalCharges, Churn
-   - feature(7개): Age, Gender, Tenure, MonthlyCharges, Contract, PaymentMethod, TotalCharges<br>
-   - categorical_columns = ['Gender', 'Contract', 'PaymentMethod']<br>
+   - feature(7개): Age, Gender, Tenure, MonthlyCharges, Contract, PaymentMethod, TotalCharges
+   - categorical_columns = ['Gender', 'Contract', 'PaymentMethod']
    - numeric_columns = ['Tenure', 'MonthlyCharges', 'TotalCharges', 'Age']
 
 - target(1개): Churn
@@ -236,4 +238,6 @@ SKN31-2nd-2Team
 5. **파생 변수(Feature Engineering) 추가**
    * 고객의 가입 기간 대비 총 지불 금액의 비율을 나타내는 `TotalCharges / Tenure` (즉, 실제 인당 평균 월 지불 가치) 등의 파생 변수를 추가하면 이탈 모델의 예측력을 높일 수 있을 것으로 예상합니다.
 
-## . 모델 학습 결과
+## 9. 모델 학습 결과
+
+## 10. 프로젝트 회고
