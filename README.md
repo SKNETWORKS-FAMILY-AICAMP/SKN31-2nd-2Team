@@ -162,7 +162,7 @@ SKN31-2nd-2Team
 
 모델이 예측해야 하는 핵심 타겟 변수인 **고객 이탈 여부 (`Churn`)** 의 비율을 파악했습니다.
 
-![이탈 분포](data/eda_plots/01_churn_distribution.png)
+<!-- ![이탈 분포](data/eda_plots/01_churn_distribution.png) -->
 
 * **이탈하지 않은 고객 (No):** 66,856명 (**66.86%**)
 * **이탈한 고객 (Yes):** 33,144명 (**33.14%**)
