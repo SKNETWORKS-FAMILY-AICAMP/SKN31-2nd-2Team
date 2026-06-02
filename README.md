@@ -74,7 +74,7 @@
 
 모델이 예측해야 하는 핵심 타겟 변수인 **고객 이탈 여부 (`Churn`)** 의 비율을 파악했습니다.
 
-![이탈 분포](eda_plots/01_churn_distribution.png)
+![이탈 분포](../SKN31-2nd-2Team/data/eda_plots/01_churn_distribution.png)
 
 * **이탈하지 않은 고객 (No):** 66,856명 (**66.86%**)
 * **이탈한 고객 (Yes):** 33,144명 (**33.14%**)
@@ -88,11 +88,11 @@
 
 `Churn` 변수를 수치화(Yes=1, No=0)하여 연속형 변수들과의 선형 상관관계를 분석한 결과입니다.
 
-![수치형 분포](eda_plots/02_numerical_distributions.png)
+![수치형 분포](../SKN31-2nd-2Team/data/eda_plots/02_numerical_distributions.png)
 
-![범주형 분석](eda_plots/03_categorical_churn_analysis.png)
+![범주형 분석](../SKN31-2nd-2Team/data/eda_plots/03_categorical_churn_analysis.png)
 
-![상관관계](eda_plots/04_correlation_matrix.png)
+![상관관계](../SKN31-2nd-2Team/data/eda_plots/04_correlation_matrix.png)
 
 * **다중공선성(Multicollinearity) 확인:** `TotalCharges`(총 청구액)는 `Tenure`(가입 기간) 및 `MonthlyCharges`(월 청구액)와 매우 강한 양의 상관관계를 보입니다. (논리 공식인 $TotalCharges \approx Tenure \times MonthlyCharges$가 성립함을 보여줌.)
 * **모델 연계:** Random Forest, Gradient Boosting, XGBoost, LightGBM은 트리 기반 앙상블 모델이기 때문에 성능(예측력) 자체에는 거의 영향이 없습니다.  하지만 변수중요도 분석을 해야한다면 높은 상관관계의 변수를 제거하는 것이 좋습니다.  Deep Learning은 수학적으로 경사하강법(Gradient Descent)과 가중치 연산을 사용하기 때문에 성능과 학습 안정성에 직접적인 타격을 받을 수 있습니다.  따라서 높은 상관관계의 변수를 제거하거나 강력한 규제를 가하는 것이 필요합니다.
