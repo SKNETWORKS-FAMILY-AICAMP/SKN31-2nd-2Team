@@ -12,23 +12,77 @@
 
 ## 📂 저장소 구조 (Repository Structure)
 
-```text
-├── app/
-│   └── app.py                    # streamlit 화면 구현
-├── data/
-│   └── synthetic_customer_churn_100k.csv # 원본 데이터셋 (Raw Data)
-├── models/
-│   ├── 01_RandomForest              # RandomForest 모델링 데이터
-│   ├── 02_GradientBoosting          # GradientBoosting 모델링 데이터
-│   ├── 03_XGBoost                   # XGBoost 모델링 데이터
-│   ├── 04_LightGBM                  # LightGBM 모델링 데이터
-│   └── 05_DeepLearning              # DeepLearning 모델링 데이터
-├── outputs/
-│   ├── 1_preprocessing_report.md    # 전처리 결과서
-│   └── 2_model_training_report.md   # 학습결과서
+```
+SKN31-2nd-2Team
+├─ app
+│  └─ app.py                                    # streamlit 화면 구현
+├─ data
+│  ├─ eda_plots
+│  │  ├─ 01_churn_distribution.png
+│  │  ├─ 02_numerical_distributions.png
+│  │  ├─ 03_categorical_churn_analysis.png
+│  │  └─ 04_correlation_matrix.png
+│  └─ synthetic_customer_churn_100k.csv
+├─ models
+│  ├─ 01_RandomForest                           # RandomForest 모델링 데이터
+│  │  ├─ data
+│  │  │  └─ synthetic_customer_churn_100k.csv   # 원본 데이터셋 (Raw Data)
+│  │  ├─ data_scaling.py
+│  │  ├─ eval.py
+│  │  ├─ guide.md
+│  │  ├─ modeling.py
+│  │  └─ saved_models
+│  │     ├─ randomforest_model.pkl
+│  │     ├─ x_test.pkl
+│  │     ├─ x_train.pkl
+│  │     ├─ x_val.pkl
+│  │     ├─ y_test.pkl
+│  │     ├─ y_train.pkl
+│  │     └─ y_val.pkl
+│  ├─ 02_GradientBoosting                       # GradientBoosting 모델링 데이터
+│  │  ├─ gb_feature_importance.png              # GradientBoosting 특성 중요도 이미지
+│  │  ├─ gb_tuning_top10_results.csv            # GradientBoosting 하이퍼파라미터 튜닝 상위 10개 결과 csv
+│  │  ├─ GradientBoosting_main.py      
+│  │  ├─ GradientBoosting_pipeline_01_preprocessing.py   #  GradientBoosting 전처리 모듈
+│  │  └─ GradientBoosting_pipeline_02_training.py     #  GradientBoosting 학습, 검증, 평가 모듈
+│  ├─ 03_XGBoost                                # XGBoost 모델링 데이터
+│  │  ├─ app.py
+│  │  ├─ data_scaling.py
+│  │  ├─ guide.md
+│  │  ├─ model_comparison_results.csv
+│  │  ├─ synthetic_customer_churn_100k.csv
+│  │  ├─ XGBoost_main.py
+│  │  ├─ XGBoost_pipeline_01_preprocessing.py
+│  │  ├─ XGBoost_pipeline_02_training.py
+│  │  ├─ XGBoost_pipeline_03_tuning.py
+│  │  ├─ xgb_feature_importance.png
+│  │  └─ xgb_tuning_top10_results.csv
+│  ├─ 04_LightGBM                               # LightGBM 모델링 데이터
+│  │  ├─ guide.md
+│  │  ├─ LightGBM_01_preprocessing.py
+│  │  ├─ LightGBM_02_training.py
+│  │  ├─ LightGBM_03_tuning.py
+│  │  ├─ LightGBM_main.py
+│  │  └─ saved_data
+│  │     ├─ lgb_feature_importance.png
+│  │     └─ lgb_tuning_top10_results.csv
+│  └─ 05_DeepLearning                           # DeepLearning 모델링 데이터
+│     ├─ data
+│     │  └─ synthetic_customer_churn_100k.csv
+│     ├─ data_scaling.py
+│     ├─ deep_learning_model.py
+│     ├─ final_test.py
+│     ├─ guide.md
+│     ├─ saved_model
+│     │  └─ deep_model.pt
+│     ├─ train.py
+│     └─ training.py
+├─ outputs
+│  ├─ 1_preprocessing_report.md                 # 전처리 결과서
+│  └─ 2_model_training_report.md                # 학습결과서
+├─ README.md                                    # 프로젝트 소개 및 데이터 명세서
+└─ requirements.txt
 
-├── .gitignore
-└── README.md                 # 프로젝트 소개 및 데이터 명세서
 ```
 
 ---
