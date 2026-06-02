@@ -47,15 +47,14 @@ TO-DO: 최종모델 선정 후 작성
 
 ### 2-1. Random Forest
 
-TO-DO: 최종 소스코드받으면 작성
-
 **하이퍼파라미터**
 
 | 파라미터 | 값 |
 | ------------ | --------- |
-| n_estimators | 정리 예정 |
-| max_depth | 정리 예정 |
-| random_state | 42 |
+| n_estimators | 100 |
+| min_samples_split | 5 |
+| min_samples_leaf | 1 |
+| max_depth | 5 |
 
 **성능 결과**
 
@@ -65,15 +64,9 @@ TO-DO: 최종 소스코드받으면 작성
 | Average Precision | 0.7055 |
 | ROC-AUC | 0.8247 |
 
-**특이사항**
-
-* 
-
 ---
 
 ### 2-2. Gradient Boosting
-
-TO-DO: 최종 소스코드받으면 작성
 
 **하이퍼파라미터**
 
@@ -88,50 +81,38 @@ TO-DO: 최종 소스코드받으면 작성
 | 지표 | Validation/Test |
 | --- | ---: |
 | Accuracy | 0.7523 |
+| Precision | 0.63 |
+| Recall | 0.62 |
+| F1-Score | 0.62 |
 | ROC-AUC | 0.8063 |
-
-**특이사항**
-
-* 현재 정리된 튜닝 결과 기준 ROC-AUC 0.8063으로 확인되었다.
-* 얕은 트리 구조에서 비교적 안정적인 성능을 보였다.
 
 ---
 
 ### 2-3. XGBoost
 
-TO-DO: 최종 소스코드받으면 작성
-
 **하이퍼파라미터**
 
 | 파라미터 | 값 |
 | --- | --- |
-| n_estimators | 정리 예정 |
-| max_depth | 정리 예정 |
-| learning_rate | 정리 예정 |
-| subsample | 정리 예정 |
-| colsample_bytree | 정리 예정 |
+| n_estimators | 300 |
+| learning_rate | 0.1 |
+| max_depth | 4 |
+| subsample | 0.7 |
+| colsample_bytree | 0.8 |
 
 **성능 결과**
 
 | 지표 | Validation/Test |
 | --- | ---: |
-| Accuracy | - |
-| Precision | - |
-| Recall | - |
-| F1-Score | - |
-| ROC-AUC | - |
-
-**특이사항**
-
-* 정형 데이터 분류 문제에서 높은 성능을 기대할 수 있는 후보 모델이다.
-* Gradient Boosting, LightGBM과 함께 부스팅 계열 모델로 비교한다.
-* 결과 정리 후 최종 비교표에 반영한다.
+| Accuracy | 0.7260 |
+| Precision | 0.5757 |
+| Recall | 0.6588 |
+| F1-Score | 0.6145 |
+| ROC-AUC | 0.8038 |
 
 ---
 
 ### 2-4. LightGBM
-
-TO-DO: 최종 소스코드받으면 작성
 
 **하이퍼파라미터**
 
@@ -145,20 +126,15 @@ TO-DO: 최종 소스코드받으면 작성
 
 | 지표 | Validation/Test |
 | --- | ---: |
-| Accuracy | 0.7396 |
-| ROC-AUC | 0.8062 |
-
-**특이사항**
-
-* 현재 정리된 튜닝 결과 기준 ROC-AUC 0.8062로 확인되었다.
-* Gradient Boosting과 유사한 수준의 ROC-AUC를 보였다.
-* 학습 속도와 운영 적용 가능성을 함께 고려할 수 있다.
+| Accuracy | 0.7528 |
+| Precision | 0.6668 |
+| Recall | 0.5515 |
+| F1-Score | 0.6037 |
+| ROC-AUC | 0.8055 |
 
 ---
 
 ### 2-5. 주요 머신러닝 모델 비교
-
-TO-DO: 최종 소스코드받으면 작성
 
 | 모델 | Accuracy | Precision | Recall | F1-Score | ROC-AUC | 비고 |
 | --- | ---: | ---: | ---: | ---: | ---: | --- |
@@ -167,31 +143,13 @@ TO-DO: 최종 소스코드받으면 작성
 | XGBoost | - | - | - | - | - | 정리 예정 |
 | LightGBM | 0.7396 | - | - | - | 0.8062 | 튜닝 결과 기준 |
 
-**해석**
 
-* 현재 정리된 결과 기준 Random Forest의 ROC-AUC가 가장 높다.
-* Gradient Boosting과 LightGBM은 ROC-AUC가 약 0.806 수준으로 유사하다.
-* XGBoost 결과가 아직 표에 정리되지 않아 최종 판단은 보류한다.
-* TO-DO: 최종모델 선정 후 동일 조건 기준 최종 성능 비교 작성
-
----
-
-### 2-6. 주요 부스팅 모델 비교
-
-TO-DO: 최종 소스코드받으면 작성
-
-| 모델                | F1-Score | ROC-AUC | PR-AUC |
-| ----------------- | -------: | ------: | -----: |
-| Gradient Boosting |   0.8677 |  0.9946 | 0.8777 |
-| XGBoost           |   0.5027 |  0.9987 | 0.9284 |
-| LightGBM          |   0.4576 |  0.9976 | 0.9188 |
-| CatBoost          |   0.3876 |  0.9984 | 0.8844 |
-
-**해석**
-
-* Gradient Boosting은 F1-Score가 높게 나타났다.
-* XGBoost는 PR-AUC와 ROC-AUC가 높아 불균형 데이터에서 Fraud 탐지 후보 모델로 적합하다고 판단하였다.
-* 최종 모델은 PR-AUC와 Recall 중심 운영 가능성을 고려하여 XGBoost를 중심으로 튜닝하였다.
+| 모델명 | Accuracy (정확도) | ROC-AUC | Precision (정밀도) | Recall (재현율) | F1-Score |
+| :--- | :---: | :---: | :---: | :---: | :---: |
+| 랜덤포레스트 | 0.7367 | 0.7926 | 0.6276 | 0.5058 | 0.5601 |
+| GradientBoosting | 0.7555 | 0.8062 | 0.6400 | 0.6200 | 0.6300 |
+| XGBoost | 0.7260 | 0.8038 | 0.5757 | 0.6588 | 0.6145 |
+| LightGBM | 0.7528 | 0.8055 | 0.6300 | 0.6200 | 0.6200 |
 
 ---
 
@@ -309,22 +267,13 @@ AutoEncoder는 최종 분류 모델이라기보다, Final Score를 구성하는 
 
 ### 4-1. 전체 모델 성능 비교표
 
-TO-DO: 최종 소스코드받으면 작성
-
-| 모델                  | F1-Score | ROC-AUC | PR-AUC |
-| ------------------- | -------: | ------: | -----: |
-| Logistic Regression |   0.0765 |  0.9374 | 0.2329 |
-| Decision Tree       |   0.2809 |  0.9795 | 0.5203 |
-| Random Forest       |   0.3150 |  0.9794 | 0.6838 |
-| Extra Trees         |   0.0716 |  0.9170 | 0.4128 |
-| Gradient Boosting   |   0.8677 |  0.9946 | 0.8777 |
-| XGBoost             |   0.5027 |  0.9987 | 0.9284 |
-| LightGBM            |   0.4576 |  0.9976 | 0.9188 |
-| CatBoost            |   0.3876 |  0.9984 | 0.8844 |
-| Stacking            |   0.4411 |  0.9986 | 0.9182 |
-| Soft Voting         |   0.4990 |  0.9976 | 0.8808 |
-| Hard Voting         |   0.5037 |       - |      - |
-| XGBoost Tuned       |   0.9265 |  0.9994 | 0.9717 |
+| 순위 | 모델명 | Accuracy (정확도) | ROC-AUC | Precision (정밀도) | Recall (재현율) | F1-Score |
+| :---: | :--- | :---: | :---: | :---: | :---: | :---: |
+| **1** | **GradientBoosting** | **0.7555** | **0.8062** | 0.6400 | 0.6200 | **0.6300** |
+| **2** | **LightGBM** | 0.7528 | 0.8055 | 0.6300 | 0.6200 | 0.6200 |
+| **3** | **XGBoost** | 0.7260 | 0.8038 | 0.5757 | **0.6588** | 0.6145 |
+| **4** | **딥러닝 (NN)** | 0.7500 | 0.7995 | 0.6300 | 0.6000 | 0.6100 |
+| **5** | **랜덤포레스트** | 0.7367 | 0.7926 | **0.6276** | 0.5058 | 0.5601 |
 
 ---
 
