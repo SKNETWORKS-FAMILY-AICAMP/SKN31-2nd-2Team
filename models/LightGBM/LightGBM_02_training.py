@@ -104,7 +104,7 @@ def run_model_training_and_evaluation(X_train, X_test, y_train, y_test, best_par
     plt.xlabel('Importance')
     plt.tight_layout()
     
-    output_image = 'models/04_LightGBM/saved_data/lgb_feature_importance.png'
+    output_image = 'models/LightGBM/saved_data/lgb_feature_importance.png'
     plt.savefig(output_image, dpi=150)
     plt.close()
     print(f"피쳐 중요도 그래프 저장: '{output_image}'")
@@ -134,8 +134,8 @@ def run_model_training_and_evaluation(X_train, X_test, y_train, y_test, best_par
 if __name__ == '__main__':
     # 02_training.py 파일을 독립 실행할 경우, 자동으로 01_preprocessing.py 파일을 실행
     try:
-        import LightGBM_01_preprocessing as p1
-        X_train, X_test, y_train, y_test = p1.run_preprocessing()
+        from models.LightGBM import LightGBM_01_preprocessing as pipe1
+        X_train, X_test, y_train, y_test = pipe1.run_preprocessing()
         if X_train is not None:
             run_model_training_and_evaluation(X_train, X_test, y_train, y_test)
     # 01_preprocessing.py 파일 자동실행이 실패할 때 오류 메세지 노출

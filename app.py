@@ -17,9 +17,9 @@ import seaborn as sns
 
 # LightGBM 기존 모듈 불러오기
 try:
-    import LightGBM_01_preprocessing as pipe1
-    import LightGBM_02_training as pipe2
-    import LightGBM_03_tuning as pipe3
+    from models.LightGBM import LightGBM_01_preprocessing as pipe1
+    from models.LightGBM import LightGBM_02_training as pipe2
+    from models.LightGBM import LightGBM_03_tuning as pipe3
 except ImportError:
     st.error("❌ 'LightGBM_01_preprocessing.py', 'LightGBM_02_training.py', 'LightGBM_03_tuning.py' 파일을 찾을 수 없습니다.")
     st.stop()
@@ -169,7 +169,7 @@ elif page == "⚙️ 관리자 모드 (모델 학습/튜닝)":
                 st.markdown("**[최종 학습] 대규모 최종 학습**")
                 st.write("튜닝 1위 파라미터를 이용하여 500개 트리와 Early Stopping 기반의 최종 모델을 생성합니다.")
                 if st.button("🚀 최종 트레이닝 모듈 가동", key="admin_btn2"):
-                    TUNING_FILE = os.path.join(BASE_DIR, 'lgb_tuning_top10_results.csv')
+                    TUNING_FILE = 'models/04_LightGBM/saved_data/lgb_tuning_top10_results.csv'
                     if not os.path.exists(TUNING_FILE):
                         st.warning("⚠️ 먼저 왼쪽의 '튜닝 모듈 가동' 버튼을 눌러 최적의 파라미터를 선출해 주세요. (기본값으로 학습을 우선 시작합니다.)")
                         best_params = None
@@ -218,7 +218,7 @@ elif page == "⚙️ 관리자 모드 (모델 학습/튜닝)":
                         
                         # 4. 피쳐 중요도 그래프 출력 부문
                         # 현재 폴더에 저장하기
-                        IMG_PATH = os.path.join(BASE_DIR, 'lgb_feature_importance.png')
+                        IMG_PATH = 'models/04_LightGBM/saved_data/lgb_feature_importance.png'
                         if os.path.exists(IMG_PATH):
                             st.markdown("### 📊 모델 평가 결과 - 피쳐 중요도 (Feature Importance)")
                             st.image(IMG_PATH, caption="LightGBM이 분석한 고객 이탈 핵심 변수 순위")

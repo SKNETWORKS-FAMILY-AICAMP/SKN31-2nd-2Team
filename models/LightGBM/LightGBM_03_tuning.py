@@ -18,7 +18,7 @@ warnings.filterwarnings('ignore')
 
 # 전처리 파일 (01_preprocessing.py) 가져오기
 try:
-    import LightGBM_01_preprocessing as p1
+    from models.LightGBM import LightGBM_01_preprocessing as pipe1
 except ImportError:
     # 전처리 파일이 없을 때 오류 메세지 노출
     print("[오류] 'LightGBM_01_preprocessing.py' 파일이 동일한 폴더에 있어야 합니다.")
@@ -26,7 +26,7 @@ except ImportError:
 
 def run_parameter_tuning():
     # 1. 전처리된 데이터 불러오기 (01_preprocessing.py 모듈 호출)
-    X_train, X_test, y_train, y_test = p1.run_preprocessing()
+    X_train, X_test, y_train, y_test = pipe1.run_preprocessing()
     if X_train is None:
         return
     print("-------------------------------------------------------------------------")
@@ -101,7 +101,7 @@ def run_parameter_tuning():
     print("-------------------------------------------------------------------------")
     
     # 6. CSV 파일로 저장
-    output_csv = 'models/04_LightGBM/saved_data/lgb_tuning_top10_results.csv'
+    output_csv = 'models/LightGBM/saved_data/lgb_tuning_top10_results.csv'
     top_10_results.to_csv(output_csv, encoding='utf-8-sig')
     print(f"튜닝 성능 상위 10개 결과 테이블이 '{output_csv}' 파일로 저장되었습니다.\n")
     
