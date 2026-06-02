@@ -1,4 +1,4 @@
-# GradientBoosting_pipeline_02_training.py
+# GradientBoosting_02_training.py
 # -*- coding: utf-8 -*-
 """
 GradientBoosting 모델 구성, 튜닝, 학습, 평가 모듈.
@@ -286,7 +286,7 @@ def run_model_training_and_evaluation(
 
 if __name__ == "__main__":
     try:
-        import GradientBoosting_pipeline_01_preprocessing as p1
+        import GradientBoosting_01_preprocessing as p1
 
         split_data = p1.run_preprocessing()
         if split_data[0] is not None:
