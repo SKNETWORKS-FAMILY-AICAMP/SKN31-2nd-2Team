@@ -5,7 +5,7 @@ from deep_learning_model import DeepLearnModel
 import os
 from train import *
 
-path= "data/synthetic_customer_churn_100k.csv"
+path= ' ../../data/synthetic_customer_churn_100k.csv'
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 x_train, x_val, x_test, y_train, y_val, y_test = preprocess_data(load_data(path))
 
@@ -41,7 +41,7 @@ val_loss_list = []
 val_acc_list = []
 
 best_score = torch.inf # 점차 내려가야 해서 infinite 설정
-save_model_path = "saved_model/deep_model.pt"  # early stopping 할 때 저장할 파일 경로
+save_model_path = "05_DeepLearning/saved_model/deep_model.pt"  # early stopping 할 때 저장할 파일 경로
 
 patience = 10   # 몇 epoch동안 성능이 변함 없는지
 stop = 0   # 연속적인 개선이 안 될 경우 count

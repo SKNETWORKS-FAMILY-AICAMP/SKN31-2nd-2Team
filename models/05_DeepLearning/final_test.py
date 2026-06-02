@@ -3,15 +3,17 @@ from sklearn.metrics import confusion_matrix, classification_report, roc_auc_sco
 from deep_learning_model import *
 from data_scaling import *
 
-path= "data/synthetic_customer_churn_100k.csv"
+path= ' ../../data/synthetic_customer_churn_100k.csv'
+model_path = "models/05_DeepLearning/saved_model/deep_model.pt"
 train_loader, val_loader, test_loader = data_loaders(path, batch_size=128)
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 threshold = 0.6
-model = torch.load("saved_model/deep_model.pt", map_location=device, weights_only=False).to(device)
+model = torch.load(model_path, map_location=device, weights_only=False).to(device)
 
 
 # 테스트 진행
+print("테스트 시작")
 model.eval()
 
 final_preds = []
