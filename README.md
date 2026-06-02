@@ -1,9 +1,12 @@
 # SKN31-2nd-2Team
-SKN31기 2차프로젝트 2팀
 
-# 🎵 Spotify 이용자 이탈 예측 머신러닝 프로젝트
 
-본 프로젝트는 Spotify 유저들의 이용 행태 및 결제 데이터를 분석하여, 향후 서비스 탈퇴(이탈) 가능성이 높은 사용자를 예측하는 머신러닝 모델 개발 프로젝트입니다. 데이터 전처리, 탐색적 데이터 분석(EDA), 그리고 예측 모델링 과정을 포함하고 있습니다.
+**프로젝트 명:** 고객 이탈(Churn) 예측 모델 구축을 위한 데이터 탐색
+
+**분석 데이터:** synthetic_customer_churn_100k.csv  
+(출처 : https://www.kaggle.com/datasets/dhrubangtalukdar/telco-customer-churn-data)
+
+본 프로젝트는 Telco 유저들의 이용 행태 및 결제 데이터를 분석하여, 향후 서비스 탈퇴(이탈) 가능성이 높은 사용자를 예측하는 머신러닝 모델 개발 프로젝트입니다. 데이터 전처리, 탐색적 데이터 분석(EDA), 그리고 예측 모델링 과정을 포함하고 있습니다.
 
 ---
 
@@ -13,55 +16,105 @@ SKN31기 2차프로젝트 2팀
 ├── app/
 │   └── app.py                    # streamlit 화면 구현
 ├── data/
-│   └── spotify_churn_dataset.csv # 원본 데이터셋 (Raw Data)
-├── notebooks/
-│   ├── 01_eda.ipynb              # 탐색적 데이터 분석 및 시각화 코드
-│   └── 02_preprocessing.ipynb    # 데이터 전처리 및 피처 엔지니어링 코드
+│   └── synthetic_customer_churn_100k.csv # 원본 데이터셋 (Raw Data)
 ├── models/
-│   └── churn_predict_model.pkl   # 학습이 완료된 머신러닝 모델 파일
-├── src/ 
-│   ├── .gitignore
-│   └── README.md                 # 프로젝트 소개 및 데이터 명세서
+│   ├── 01_RandomForest              # RandomForest 모델링 데이터
+│   ├── 02_GradientBoosting          # GradientBoosting 모델링 데이터
+│   ├── 03_XGBoost                   # XGBoost 모델링 데이터
+│   ├── 04_LightGBM                  # LightGBM 모델링 데이터
+│   └── 05_DeepLearning              # DeepLearning 모델링 데이터
+├── outputs/
+│   ├── 1_preprocessing_report.md    # 전처리 결과서
+│   └── 2_model_training_report.md   # 학습결과서
+
+├── .gitignore
+└── README.md                 # 프로젝트 소개 및 데이터 명세서
 ```
 
 ---
 
-## 📊 데이터 명세서 (Data Dictionary)
+## 1. 데이터 개요 및 구조 분석
 
-본 문서는 Spotify 이용자 이탈 예측 머신러닝 모델 개발 프로젝트에 사용되는 원시 데이터(Raw Data)의 컬럼 정보와 전처리 가이드를 담고 있습니다.
+* **데이터 규모:** 총 100,000행(Rows), 9열(Columns)
+* **결측치 현황:** 모든 변수의 Non-Null Count가 100,000개로 일치하여 결측치 미존재
+* **변수 타입 구성:**
+  * **수치형(Numerical) 변수:** `CustomerID`, `Age`, `Tenure`, `MonthlyCharges`, `TotalCharges` (5개)
+  * **범주형(Categorical) 변수:** `Gender`, `Contract`, `PaymentMethod`, `Churn` (4개)
 
-### 📋 데이터 구조 개요
-- **데이터셋 파일명:** `spotify_churn_dataset.csv`
-- **목적:** 사용자 행동 패턴 및 결제 데이터를 기반으로 한 이탈 여부(`is_churned`) 이진 분류(Binary Classification)
-- **대상 변수 (Target):** `is_churned` (0: 유지, 1: 이탈)
+### 1-1. 데이터 변수 설명
 
----
-
-### 🔍 컬럼별 상세 명세 (Specification Table)
-
-| 컬럼명 (Column Name) | 데이터 타입 (Type) | 변수 유형 (Class) | 설명 (Description) | 예시 값 (Example) | 전처리 시 고려사항 및 비고 (Pre-processing Notes) |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| **user_id** | 수치형 (Integer) | 식별자 (ID) | 고유 사용자 식별 번호 | `1`, `7971` | 단순 식별용 변수이므로 **모델 학습 시 제외(Drop)** 필요. |
-| **gender** | 범주형 (String) | 독립 변수 (Feature) | 사용자의 성별 | `Female`, `Male`, `Other` | 다중 범주형 변수. **원-핫 인코딩(One-Hot Encoding)** 적용 필요. |
-| **age** | 수치형 (Integer) | 독립 변수 (Feature) | 사용자의 나이 (만 나이) | `18`, `54`, `58` | 데이터 분포 확인 후 **스케일링(Scaling)** 또는 연령대별 **범주화(Binning)** 검토. |
-| **country** | 범주형 (String) | 독립 변수 (Feature) | 거주 국가 (ISO 국가 코드 2자리) | `US`, `CA`, `DE`, `IN` | 범주가 많을 경우 고차원 방지를 위해 원-핫 인코딩 외에 **빈도수 기반 인코딩(Frequency/Target Encoding)** 고려. |
-| **subscription_type**| 범주형 (String) | 독립 변수 (Feature) | 현재 이용 중인 구독 요금제 유형 | `Free`, `Premium`, `Family`, `Student` | 이탈률과 밀접한 핵심 변수. 순서형(Ordinal) 성격 여부 판단 후 인코딩 방식 결정. |
-| **listening_time** | 수치형 (Integer) | 독립 변수 (Feature) | 총 청취 시간 (분 단위) | `26`, `141`, `280` | 연속형 수치 데이터. 이상치(Outlier) 제거 및 **MinMax/Standard 스케일링** 필요. |
-| **songs_played_per_day**| 수치형 (Integer) | 독립 변수 (Feature) | 하루 평균 음악 재생 곡 수 | `3`, `23`, `62` | `listening_time`과 강한 상관관계를 보일 수 있으므로 **다중공선성(Multicollinearity)** 확인 필요. |
-| **skip_rate** | 수치형 (Float) | 독립 변수 (Feature) | 곡 건너뛰기 비율 (0.0 ~ 1.0) | `0.04`, `0.20`, `0.46` | 이미 0과 1 사이로 정규화된 형태. 사용자 만족도를 나타내는 프록시(Proxy) 지표로 활용 가능. |
-| **device_type** | 범주형 (String) | 독립 변수 (Feature) | 주로 사용하는 디바이스 플랫폼 | `Desktop`, `Mobile`, `Web` | 범주형 변수. **원-핫 인코딩(One-Hot Encoding)** 적용. |
-| **ads_listened_per_week**| 수치형 (Integer) | 독립 변수 (Feature) | 주당 광고 청취 횟수 | `0`, `13`, `44` | `subscription_type`이 'Free'인 유저에게서만 높게 나타나는 경향 확인 및 교차 효과 분석 필요. |
-| **offline_listening** | 범주형/이진 (Binary) | 독립 변수 (Feature) | 오프라인 다운로드/청취 기능 사용 여부 | `0` (미사용), `1` (사용) | 이미 0과 1로 이진 인코딩(Binary Encoded) 완료되어 변환 없이 수치 데이터로 바로 사용 가능. |
-| **is_churned** | 범주형/이진 (Binary) | **종속 변수 (Target)** | 서비스 탈퇴(이탈) 여부 | `0` (유지), `1` (이탈) | **모델의 예측 목표.** 전체 데이터에서 0과 1의 비율을 확인하여 **클래스 불균형(Class Imbalance)** 대응 필요. |
+| 컬럼명 | 설명 | 데이터 타입 | 예시 |
+|---|---|---|---|
+| CustomerID | 고객 고유 식별자 | int | 1, 2, …, 100000 |
+| Age | 고객 나이 (18–80세) | int | 51 |
+| Gender | 고객 성별 | string | Male / Female / Other |
+| Tenure | 서비스 이용 기간 (월, 1–72) | int | 58 |
+| MonthlyCharges | 월 청구 금액 (USD, 약 10–150) | float | 95.92 |
+| TotalCharges | 누적 청구 금액 (Tenure × MonthlyCharges + 노이즈) | float | 5530.46 |
+| Contract | 계약 유형 | string | 월별 / 1년 / 2년 |
+| PaymentMethod | 결제 수단 | string | 전자수표 / 우편수표 / 계좌이체 / 신용카드 |
+| Churn | 이탈 여부 (타깃 변수) | string | Yes / No |
 
 ---
 
-### 🛠️ 데이터 탐색(EDA) 및 전처리 체크리스트
+## 2. 수치형 변수 기초 통계량 및 데이터 이상치 분석
 
-1. **[ ] 결측치 확인 (`df.isnull().sum()`)**
-   - 각 컬럼에 누락된 값이 있는지 확인하고, 발견 시 대체(Imputation) 혹은 제거 전략 수립.
-2. **[ ] 클래스 불균형 확인 (`df['is_churned'].value_counts(normalize=True)`)**
-   - 이탈자 비율이 너무 적을 경우 모델이 0으로만 예측하는 편향이 생길 수 있으므로, 평가지표로 Accuracy 대신 **F1-Score / AUC-ROC** 채택 및 **SMOTE** 같은 복원 추출 알고리즘 고려.
-3. **[ ] 파생 변수(Feature Engineering) 아이디어**
-   - `listening_time` 대비 `songs_played_per_day` 비율을 계산하여 한 곡당 평균 청취 시간 지표 생성 가능.
-   - `subscription_type`이 유료 요금제(Premium, Family, Student)임에도 불구하고 `offline_listening`이 0인 미사용 유저층 분석.
+각 수치형 변수의 기술 통계 정보(`df.describe()`)를 분석한 결과, 머신러닝 모델링 전에 반드시 인지해야 할 몇 가지 특이사항과 오류가 발견되었습니다.
+
+| 변수명 | 평균값 (Mean) | 중위값 (50%) | 최솟값 (Min) | 최댓값 (Max) | 주요 특징 분석 |
+| :--- | :---: | :---: | :---: | :---: | :--- |
+| **Age** (나이) | 49.0세 | 49.0세 | 18.0세 | 80.0세 | 18세부터 80세까지 아주 고르게 분포된 정상 데이터입니다. |
+| **Tenure** (가입기간) | 36.5개월 | 37.0개월 | 1.0개월 | 72.0개월 | 최소 1개월에서 최대 6년(72개월)까지의 가입 기간을 가집니다. |
+| **MonthlyCharges** (월요금) | 79.9달러 | 80.0달러 | 10.0달러 | 150.0달러 | 최소 10달러~최대 150달러 사이에서 균등하게 청구되고 있습니다. |
+| **TotalCharges** (총요금) | 2,926.1달러 | 2,268.0달러 | **-118.43달러** | 10,831.5달러 | **[오류 발견]** **최솟값이 음수(-118.43)** 인 데이터가 존재합니다. |
+
+### ⚠️ 중요 데이터 오류 파악
+* **TotalCharges의 음수(-) 값:** 총 청구 금액에 마이너스 값이 잡혀 있습니다. 이는 환불, 프로모션 크레딧 또는 시스템 기록 오류일 수 있으므로 **0 이하의 값은 0으로 대체하거나 해당 행을 제거하는 전처리**가 필요합니다.
+* **데이터의 치우침 (Skewness):** `TotalCharges`는 평균(2,926)이 중위값(2,268)보다 확연히 높습니다. 이는 대다수 고객은 적은 금액을 내지만, 장기 가입자 중 일부 헤비 유저가 큰 금액을 지불하여 **오른쪽 꼬리가 긴(Right-skewed) 분포**를 형성하고 있음을 뜻합니다.
+
+---
+
+## 3. 타겟 변수(Churn) 분포 분석
+
+모델이 예측해야 하는 핵심 타겟 변수인 **고객 이탈 여부 (`Churn`)** 의 비율을 파악했습니다.
+
+![이탈 분포](eda_plots/01_churn_distribution.png)
+
+* **이탈하지 않은 고객 (No):** 66,856명 (**66.86%**)
+* **이탈한 고객 (Yes):** 33,144명 (**33.14%**)
+
+### 💡 클래스 불균형 분석
+일반적인 기업의 이탈 데이터는 이탈자 비율이 5~10% 미만인 극심한 불균형 데이터가 많으나, 본 데이터는 이탈률이 **약 33%** 로 꽤 높은 편입니다. 따라서 모델 학습 시 적절한 불균형 전처리를 적용함으로써 모델이 안정적으로 이탈 패턴을 학습할 수 있는 환경을 만들어 주는 것이 좋습니다.
+
+---
+
+## 4. 변수 간 상관관계 분석 (Correlation Matrix)
+
+`Churn` 변수를 수치화(Yes=1, No=0)하여 연속형 변수들과의 선형 상관관계를 분석한 결과입니다.
+
+![수치형 분포](eda_plots/02_numerical_distributions.png)
+
+![범주형 분석](eda_plots/03_categorical_churn_analysis.png)
+
+![상관관계](eda_plots/04_correlation_matrix.png)
+
+* **다중공선성(Multicollinearity) 확인:** `TotalCharges`(총 청구액)는 `Tenure`(가입 기간) 및 `MonthlyCharges`(월 청구액)와 매우 강한 양의 상관관계를 보입니다. (논리 공식인 $TotalCharges \approx Tenure \times MonthlyCharges$가 성립함을 보여줌.)
+* **모델 연계:** Random Forest, Gradient Boosting, XGBoost, LightGBM은 트리 기반 앙상블 모델이기 때문에 성능(예측력) 자체에는 거의 영향이 없습니다.  하지만 변수중요도 분석을 해야한다면 높은 상관관계의 변수를 제거하는 것이 좋습니다.  Deep Learning은 수학적으로 경사하강법(Gradient Descent)과 가중치 연산을 사용하기 때문에 성능과 학습 안정성에 직접적인 타격을 받을 수 있습니다.  따라서 높은 상관관계의 변수를 제거하거나 강력한 규제를 가하는 것이 좋습니다.
+---
+
+## 5. EDA 결론 및 전처리 전략
+
+EDA를 통해 도출된 인사이트를 바탕으로, **모델 성능을 극대화하기 위한 4가지 핵심 전처리 전략**은 다음과 같습니다.
+
+1. **이상치 및 데이터 오류 처리**
+   * `TotalCharges` 열에서 발견된 음수 값(`-118.43`)들을 제거하거나 `0`으로 채워주는 이상치 정제 작업을 필수로 진행합니다.
+2. **범주형 변수의 인코딩(Encoding)**
+   * `Gender`, `Contract`, `PaymentMethod` 등 문자열 범주형 데이터는 숫자로 바꿔야 모델이 이해할 수 있습니다.
+   * 따라서 적절한 인코딩을 진행합니다.
+3. **데이터 스케일링(Scaling) 생략 가능**
+   * `Age`(수십 단위)와 `TotalCharges`(만 단위)는 스케일 차이가 매우 큽니다.
+   * 트리 기반 앙상블 모델은 값의 절대적 크기가 아닌 '대소 관계(Rank)'를 기준으로 데이터를 쪼개기 때문에 스케일링 전처리를 생략할 수 있습니다.
+4. **파생 변수(Feature Engineering) 추천**
+   * 고객의 가입 기간 대비 총 지불 금액의 비율을 나타내는 `TotalCharges / Tenure` (즉, 실제 인당 평균 월 지불 가치) 등의 파생 변수를 추가하면 이탈 모델의 예측력을 더욱 날카롭게 끌어올릴 수 있을 것입니다.
+
+---
