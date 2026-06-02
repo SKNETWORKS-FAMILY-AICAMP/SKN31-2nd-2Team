@@ -1,10 +1,9 @@
-# GradientBoosting_pipeline_01_preprocessing.py
+# GradientBoosting2_pipeline_01_preprocessing.py
 # -*- coding: utf-8 -*-
 """
-[Pipeline 01] GradientBoosting 데이터 전처리
+GradientBoosting2 데이터 로드 및 기본 전처리.
 
-GradientBoosting1 버전은 전처리 단계에서 범주형 변수를 직접 원-핫 인코딩한 뒤,
-모델 학습 파일로 숫자형 데이터만 넘깁니다.
+범주형 인코딩은 모델 Pipeline 안의 ColumnTransformer가 담당합니다.
 """
 import os
 from typing import Optional
@@ -24,13 +23,13 @@ SplitData = tuple[
 
 def add_gradient_boosting_features(df: pd.DataFrame) -> pd.DataFrame:
     """
-    GradientBoosting 성능 개선에 사용할 파생변수를 추가합니다.
+    고객 데이터에 요금/구간 파생변수를 추가합니다.
 
     Args:
         df (pd.DataFrame): Churn 컬럼을 포함한 원본 고객 데이터.
 
     Returns:
-        pd.DataFrame: 요금 관련 파생변수와 구간 변수가 추가된 데이터.
+        pd.DataFrame: 파생변수가 추가된 데이터.
     """
     df = df.copy()
 
@@ -44,7 +43,6 @@ def add_gradient_boosting_features(df: pd.DataFrame) -> pd.DataFrame:
     df["MonthlyToAverageChargeRatio"] = (
         df["MonthlyCharges"] / df["AvgMonthlyChargeFromTotal"].replace(0, np.nan)
     )
-
     df["AgeGroup"] = pd.cut(
         df["Age"],
         bins=[17, 29, 44, 59, 80],
@@ -59,15 +57,14 @@ def add_gradient_boosting_features(df: pd.DataFrame) -> pd.DataFrame:
     )
 
     numeric_columns = df.select_dtypes(include=[np.number]).columns
-    df[numeric_columns] = df[numeric_columns].replace([np.inf, -np.inf], np.nan)
-    df[numeric_columns] = df[numeric_columns].fillna(0)
+    df[numeric_columns] = df[numeric_columns].replace([np.inf, -np.inf], np.nan).csv
 
     return df
 
 
 def run_preprocessing(data_filename: str = "synthetic_customer_churn_100k.csv") -> SplitData:
     """
-    CSV 파일을 읽고 GradientBoosting1 학습용 데이터를 반환합니다.
+    CSV 파일을 읽고 train/test 데이터로 분리합니다.
 
     Args:
         data_filename (str): 현재 파일과 같은 폴더에 있는 CSV 파일명.
@@ -76,8 +73,7 @@ def run_preprocessing(data_filename: str = "synthetic_customer_churn_100k.csv") 
         SplitData: X_train, X_test, y_train, y_test.
             오류가 발생하면 네 값을 모두 None으로 반환합니다.
     """
-    base_dir = os.path.dirname(os.path.abspath(__file__))
-    data_path = os.path.join(base_dir, data_filename)
+    data_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), data_filename)
 
     try:
         df = pd.read_csv(data_path)
@@ -110,11 +106,6 @@ def run_preprocessing(data_filename: str = "synthetic_customer_churn_100k.csv") 
 
     X = df.drop("Churn", axis=1)
     y = df["Churn"].astype(int)
-
-    categorical_columns = X.select_dtypes(include=["object", "category"]).columns.tolist()
-    if categorical_columns:
-        X = pd.get_dummies(X, columns=categorical_columns, drop_first=False, dtype=int)
-        print(f"범주형 변수 원-핫 인코딩 완료: {categorical_columns}")
 
     X_train, X_test, y_train, y_test = train_test_split(
         X,
