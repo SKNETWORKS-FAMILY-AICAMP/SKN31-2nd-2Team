@@ -18,11 +18,15 @@ warnings.filterwarnings('ignore')
 
 # 전처리 파일 (01_preprocessing.py) 가져오기
 try:
-    import LightGBM_01_preprocessing as pipe1
-except ImportError:
-    # 전처리 파일이 없을 때 오류 메세지 노출
-    print("[오류] 'LightGBM_01_preprocessing.py' 파일이 동일한 폴더에 있어야 합니다.")
-    exit()
+    # 1. 대시보드(app.py)를 통해 패키지 형태로 호출되었을 때를 위한 상대 경로 import
+    from . import LightGBM_01_preprocessing as pipe1
+except (ImportError, ValueError):
+    try:
+        # 2. 터미널에서 이 스크립트 파일만 단독으로 실행(python LightGBM_03_tuning.py)했을 때를 위한 import
+        import LightGBM_01_preprocessing as pipe1
+    except ImportError:
+        print("[오류] 'LightGBM_01_preprocessing.py' 파일이 동일한 폴더에 있어야 합니다.")
+        exit()
 
 def run_parameter_tuning():
     # 1. 전처리된 데이터 불러오기 (01_preprocessing.py 모듈 호출)

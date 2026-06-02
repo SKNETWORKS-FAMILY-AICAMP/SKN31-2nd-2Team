@@ -132,12 +132,15 @@ def run_model_training_and_evaluation(X_train, X_test, y_train, y_test, best_par
     return metrics
 
 if __name__ == '__main__':
-    # 02_training.py 파일을 독립 실행할 경우, 자동으로 01_preprocessing.py 파일을 실행
     try:
-        import LightGBM_01_preprocessing as pipe1
+        # 패키지 혹은 단독 실행 대응
+        try:
+            from . import LightGBM_01_preprocessing as pipe1
+        except (ImportError, ValueError):
+            import LightGBM_01_preprocessing as pipe1
+            
         X_train, X_test, y_train, y_test = pipe1.run_preprocessing()
         if X_train is not None:
             run_model_training_and_evaluation(X_train, X_test, y_train, y_test)
-    # 01_preprocessing.py 파일 자동실행이 실패할 때 오류 메세지 노출
     except ImportError:
         print("[오류] 'LightGBM_01_preprocessing.py' 파일이 동일 폴더에 있어야 자동으로 실행합니다.")

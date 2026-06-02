@@ -15,7 +15,7 @@ from sklearn.model_selection import train_test_split
 
 def run_preprocessing():
     # 1. 데이터 불러오기
-    DATA_PATH = 'data\synthetic_customer_churn_100k.csv'
+    DATA_PATH = 'data/synthetic_customer_churn_100k.csv'
 
     # 파일이 없을 때 오류 메세지 노출
     if not os.path.exists(DATA_PATH):
