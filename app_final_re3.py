@@ -17,6 +17,7 @@ import pandas as pd
 import numpy as np
 import os
 import base64
+import time
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
@@ -393,6 +394,16 @@ def render_header():
 # ═══════════════════════════════════════════════════════════════════════════════
 if "page" not in st.session_state:
     st.session_state.page = "user"
+if "last_prob" not in st.session_state:
+    st.session_state.last_prob = None
+if "last_inputs" not in st.session_state:
+    st.session_state.last_inputs = {}
+if "show_chat" not in st.session_state:
+    st.session_state.show_chat = False
+if "show_call" not in st.session_state:
+    st.session_state.show_call = False
+if "show_wait_msg" not in st.session_state:
+    st.session_state.show_wait_msg = False
 
 render_header()
 
@@ -481,91 +492,216 @@ if st.session_state.page == "user":
         total_charges   = st.number_input("총 청구 금액 (TotalCharges, $)",
                                           min_value=0.0, max_value=30000.0, value=monthly_charges * tenure)
 
+    # 입력값을 session_state에 항상 최신으로 유지 (채팅/전화 버튼 rerun 시에도 접근 가능)
+    st.session_state.last_inputs = {
+        "age": age, "gender": gender, "tenure": tenure,
+        "contract": contract, "payment_method": payment_method,
+        "monthly_charges": monthly_charges
+    }
+
     # st.markdown('</div >', unsafe_allow_html=True)  # .custom-card
     # ── 예측 버튼 ──────────────────────────────────────────────────────────────
     run_btn = st.button("🔮  이탈 위험도 분석 실행", key="predict_btn", type="primary")
 
     if run_btn:
-        with st.spinner("🧠 연동 모델로 실시간 분석 중..."):
-            # 입력 데이터를 모델이 읽을 수 있는 데이터프레임 구조로 변환
-            input_data = pd.DataFrame([{
-                "Age": age, "Gender": gender, "Tenure": tenure,
-                "MonthlyCharges": monthly_charges, "Contract": contract,
-                "PaymentMethod": payment_method, "TotalCharges": total_charges
-            }])
-            # 전처리 모듈을 통해 기존 10만 건 데이터를 읽어와 구조 맞추기
-            X_train, X_test, y_train, y_test = pipe1.run_preprocessing()
+        try:
+            with st.spinner("🧠 연동 모델로 실시간 분석 중..."):
+                input_data = pd.DataFrame([{
+                    "Age": age, "Gender": gender, "Tenure": tenure,
+                    "MonthlyCharges": monthly_charges, "Contract": contract,
+                    "PaymentMethod": payment_method, "TotalCharges": total_charges
+                }])
+                X_train, X_test, y_train, y_test = pipe1.run_preprocessing()
 
-            if X_train is not None:
-                import lightgbm as lgb
+                if X_train is not None:
+                    import lightgbm as lgb
 
-                # 저장된 튜닝 파라미터 로드 (없으면 기본값)
-                best_params = None
-                if os.path.exists(TUNING_FILE):
-                    top10 = pd.read_csv(TUNING_FILE)
-                    best_params = {
-                        "learning_rate": float(top10.iloc[0]["learning_rate"]),
-                        "num_leaves":    int(top10.iloc[0]["num_leaves"]),
-                        "max_depth":     int(top10.iloc[0]["max_depth"]),
-                    }
-                # 가볍게 실시간 학습 모델 빌드 (사용자가 수정한 최신 파라미터 반영 목적)
-                lr         = best_params["learning_rate"] if best_params else 0.05
-                num_leaves = best_params["num_leaves"]    if best_params else 31
-                max_depth  = best_params["max_depth"]     if best_params else -1
-                
-                # 카테고리형 변수 매핑 처리
-                for col in ["Gender", "Contract", "PaymentMethod"]:
-                    input_data[col] = input_data[col].astype("category")
+                    best_params = None
+                    if os.path.exists(TUNING_FILE):
+                        top10 = pd.read_csv(TUNING_FILE)
+                        best_params = {
+                            "learning_rate": float(top10.iloc[0]["learning_rate"]),
+                            "num_leaves":    int(top10.iloc[0]["num_leaves"]),
+                            "max_depth":     int(top10.iloc[0]["max_depth"]),
+                        }
+                    lr         = best_params["learning_rate"] if best_params else 0.05
+                    num_leaves = best_params["num_leaves"]    if best_params else 31
+                    max_depth  = best_params["max_depth"]     if best_params else -1
 
-                model = lgb.LGBMClassifier(
-                    n_estimators=100, learning_rate=lr,
-                    num_leaves=num_leaves, max_depth=max_depth,
-                    random_state=42, class_weight="balanced", verbose=-1
-                )
-                model.fit(X_train, y_train)
-                # 결과 예측
-                prob = model.predict_proba(input_data)[0][1] * 100
+                    for col in ["Gender", "Contract", "PaymentMethod"]:
+                        input_data[col] = input_data[col].astype("category")
 
-                # ── 결과 출력 ────────────────────────────────────────────────
-                st.markdown('<div class="custom-divider"></div>', unsafe_allow_html=True)
-                st.markdown('<div class="section-title">분석 결과</div>', unsafe_allow_html=True)
-                # st.markdown('<div class="custom-card">', unsafe_allow_html=True)
-                # 게이지바 형태 시각화 대신 스트림릿 컴포넌트 활용
-                if prob >= 50:
-                    st.markdown(
-                        f'<div style="display:flex;align-items:baseline;gap:16px;margin-bottom:4px">'
-                        f'<span class="result-prob-high">{prob:.0f}%</span>'
-                        f'<span class="risk-badge-high">🚨 이탈 위험군</span>'
-                        f'</div>',
-                        unsafe_allow_html=True
+                    model = lgb.LGBMClassifier(
+                        n_estimators=100, learning_rate=lr,
+                        num_leaves=num_leaves, max_depth=max_depth,
+                        random_state=42, class_weight="balanced", verbose=-1
                     )
-                    st.progress(int(prob))
-                    st.markdown(
-                        '<div class="result-tip-high">⚠️ <strong>추천 조치:</strong> '
-                        '특별 할인 프로모션 제안, 장기 계약 전환 상담 유도가 필요합니다. '
-                        '즉각적인 리텐션 액션을 취하세요.</div>',
-                        unsafe_allow_html=True
-                    )
+                    model.fit(X_train, y_train)
+                    st.session_state.last_prob = model.predict_proba(input_data)[0][1] * 100
+
                 else:
-                    st.markdown(
-                        f'<div style="display:flex;align-items:baseline;gap:16px;margin-bottom:4px">'
-                        f'<span class="result-prob-low">{prob:.0f}%</span>'
-                        f'<span class="risk-badge-low">✅ 안정 유지군</span>'
-                        f'</div>',
-                        unsafe_allow_html=True
-                    )
-                    st.progress(int(prob))
-                    st.markdown(
-                        '<div class="result-tip-low">✔ <strong>현재 상태:</strong> '
-                        '고객이 안정적으로 유지되고 있습니다. '
-                        '정기적인 만족도 확인과 혜택 안내를 지속하세요.</div>',
-                        unsafe_allow_html=True
-                    )
+                    st.error("❌ 전처리 모듈에서 X_train이 None입니다.")
+        except Exception as _e:
+            import traceback as _tb
+            st.error(f"❌ 예측 중 오류 발생: {_e}")
+            st.code(_tb.format_exc(), language="python")
 
-                # st.markdown('</div>', unsafe_allow_html=True)  # result card
+    # ── 분석 결과 + 상담 액션 ──────────────────────────────────────────
+    # run_btn 블록 밖에 위치 → expander/버튼 클릭으로 rerun돼도 결과 유지됨
+    if st.session_state.last_prob is not None:
+        prob = st.session_state.last_prob
 
+        st.markdown('<div class="custom-divider"></div>', unsafe_allow_html=True)
+        st.markdown('<div class="section-title">분석 결과</div>', unsafe_allow_html=True)
+        if prob >= 50:
+            st.markdown(
+                f'<div style="display:flex;align-items:baseline;gap:16px;margin-bottom:4px">'
+                f'<span class="result-prob-high">{prob:.0f}%</span>'
+                f'<span class="risk-badge-high">🚨 이탈 위험군</span>'
+                f'</div>',
+                unsafe_allow_html=True
+            )
+            st.progress(int(prob))
+            st.markdown(
+                '<div class="result-tip-high">⚠️ <strong>추천 조치:</strong> '
+                '특별 할인 프로모션 제안, 장기 계약 전환 상담 유도가 필요합니다. '
+                '즉각적인 리텐션 액션을 취하세요.</div>',
+                unsafe_allow_html=True
+            )
+        else:
+            st.markdown(
+                f'<div style="display:flex;align-items:baseline;gap:16px;margin-bottom:4px">'
+                f'<span class="result-prob-low">{prob:.0f}%</span>'
+                f'<span class="risk-badge-low">✅ 안정 유지군</span>'
+                f'</div>',
+                unsafe_allow_html=True
+            )
+            st.progress(int(prob))
+            st.markdown(
+                '<div class="result-tip-low">✔ <strong>현재 상태:</strong> '
+                '고객이 안정적으로 유지되고 있습니다. '
+                '정기적인 만족도 확인과 혜택 안내를 지속하세요.</div>',
+                unsafe_allow_html=True
+            )
+
+    # ── 상담 액션 (분석 결과가 있을 때만 표시) ──────────────────────────
+    if st.session_state.last_prob is not None:
+        p   = st.session_state.last_prob
+        inp = st.session_state.last_inputs
+        risk = p >= 50
+        risk_label  = "이탈 위험군" if risk else "안정 유지군"
+        contract_kr = {"Month-to-month": "월정액", "One year": "1년 약정", "Two year": "2년 약정"}.get(inp.get("contract", ""), inp.get("contract", ""))
+
+        st.markdown('<div class="custom-divider"></div>', unsafe_allow_html=True)
+        st.markdown("**📨 상담 액션**")
+
+        btn_col1, btn_col2 = st.columns(2, gap="medium")
+        with btn_col1:
+            if st.button("💬  1:1 채팅 상담 메시지 생성", key="chat_btn", use_container_width=True):
+                st.session_state.show_chat = True
+                st.session_state.show_call = False
+                st.rerun()
+        with btn_col2:
+            if st.button("📞  전화 상담 스크립트 생성", key="call_btn", use_container_width=True):
+                st.session_state.show_call = True
+                st.session_state.show_chat = False
+                st.rerun()
+
+        # 💬 채팅 템플릿 출력
+        if st.session_state.show_chat:
+            tenure   = inp.get("tenure", "")
+            monthly  = inp.get("monthly_charges", "")
+            if risk:
+                msg = (
+                    "안녕하세요, 고객님 😊\n"
+                    f"저희 서비스를 {tenure}개월간 이용해 주셔서 진심으로 감사드립니다.\n\n"
+                    f"고객님께 특별히 준비한 혜택을 안내드리고자 연락드렸어요.\n"
+                    f"현재 {contract_kr} 요금제를 이용 중이신데, 장기 약정으로 전환하시면 "
+                    "월 청구 금액에서 최대 20% 할인 혜택을 받으실 수 있습니다! 🎁\n\n"
+                    "지금 바로 전환하시면 추가로 첫 달 무료 혜택도 드리고 있어요.\n"
+                    "관심 있으시면 편하게 답장 주세요! 언제든지 도움 드리겠습니다 🙏"
+                )
             else:
-                st.error("❌ 전처리 모듈에서 데이터를 불러오지 못했습니다.")
+                msg = (
+                    "안녕하세요, 고객님 😊\n"
+                    f"저희 서비스를 {tenure}개월간 꾸준히 이용해 주셔서 감사합니다.\n\n"
+                    "고객님의 소중한 이용에 보답하고자 정기 혜택 안내를 드립니다.\n"
+                    f"이번 달 {contract_kr} 고객 대상 특별 포인트 적립 이벤트가 진행 중이에요 🎉\n\n"
+                    "더 궁금하신 사항이 있으시면 언제든지 문의해 주세요!\n"
+                    "항상 최선을 다해 도움 드리겠습니다 🙏"
+                )
+            badge_color = "#3730a3" if risk else "#166534"
+            bg_color    = "#f0f4ff" if risk else "#f0fdf4"
+            border_col  = "#c7d2fe" if risk else "#bbf7d0"
+            inner_bdr   = "#e0e7ff" if risk else "#dcfce7"
+            label_icon  = "💬"
+            label_text  = "카카오톡 / 문자 메시지 템플릿"
+            note        = "※ 위 메시지를 복사하여 카카오톡 또는 문자 앱에 붙여넣기 하세요."
+            st.markdown(
+                f'<div style="background:{bg_color};border:1.5px solid {border_col};'
+                f'border-radius:12px;padding:20px 24px;margin-top:12px;">'
+                f'<div style="font-size:13px;font-weight:700;color:{badge_color};margin-bottom:10px;">'
+                f'{label_icon} {label_text} &nbsp;'
+                f'<span style="font-weight:400;color:#6b7280;">({risk_label} · 이탈확률 {p:.0f}%)</span></div>'
+                f'<div style="background:white;border-radius:8px;padding:16px 18px;'
+                f'font-size:14px;line-height:1.8;color:#1f2937;white-space:pre-wrap;'
+                f'border:1px solid {inner_bdr};">{msg}</div>'
+                f'<div style="font-size:12px;color:#9ca3af;margin-top:8px;">{note}</div>'
+                f'</div>',
+                unsafe_allow_html=True
+            )
+
+        # 📞 전화 스크립트 출력
+        if st.session_state.show_call:
+            tenure  = inp.get("tenure", "")
+            monthly = inp.get("monthly_charges", "")
+            if risk:
+                script = (
+                    "[전화 연결 시]\n"
+                    "'안녕하세요, 고객님. 저는 고객 지원팀 담당자 ○○○입니다.\n"
+                    " 통화 가능하신가요? 잠시 안내 말씀 드리고 싶어서 연락드렸습니다.'\n\n"
+                    "[본론]\n"
+                    f"'고객님께서 현재 {contract_kr} 요금제로 {tenure}개월째 이용 중이신데요,\n"
+                    " 고객님께 특별히 맞춤 혜택을 준비했습니다.\n"
+                    f" 장기 약정으로 전환하시면 월 ${monthly}에서 최대 20% 할인된 금액으로\n"
+                    " 동일한 서비스를 계속 누리실 수 있어요.'\n\n"
+                    "[고객 반응 대기 후]\n"
+                    "'혹시 현재 서비스 이용에 불편하신 점은 없으셨나요?\n"
+                    " 말씀해 주시면 제가 바로 도움 드릴 수 있습니다.'\n\n"
+                    "[마무리]\n"
+                    "'오늘 소중한 시간 내주셔서 감사합니다.\n"
+                    " 추가 문의는 언제든지 연락 주세요. 좋은 하루 되세요! 😊'"
+                )
+            else:
+                script = (
+                    "[전화 연결 시]\n"
+                    "'안녕하세요, 고객님. 저는 고객 지원팀 담당자 ○○○입니다.\n"
+                    " 통화 괜찮으시면 잠깐 안내 드려도 될까요?'\n\n"
+                    "[본론]\n"
+                    f"'고객님께서 {tenure}개월간 저희 서비스를 이용해 주고 계신데,\n"
+                    f" 이번에 {contract_kr} 고객분들을 위한 감사 혜택 이벤트가 준비됐습니다.\n"
+                    " 이번 달 안에 신청하시면 포인트 추가 적립과 소정의 사은품도 드리고 있어요.'\n\n"
+                    "[고객 반응 대기 후]\n"
+                    "'혹시 서비스 이용하시면서 개선됐으면 하는 부분 있으시면\n"
+                    " 편하게 말씀해 주세요. 소중한 의견 꼭 반영하겠습니다.'\n\n"
+                    "[마무리]\n"
+                    "'감사합니다, 고객님. 앞으로도 더 좋은 서비스로 보답하겠습니다.\n"
+                    " 좋은 하루 되세요! 😊'"
+                )
+            st.markdown(
+                '<div style="background:#f0fdf4;border:1.5px solid #bbf7d0;'
+                'border-radius:12px;padding:20px 24px;margin-top:12px;">'
+                '<div style="font-size:13px;font-weight:700;color:#166534;margin-bottom:10px;">'
+                f'📞 전화 상담 스크립트 &nbsp;'
+                f'<span style="font-weight:400;color:#6b7280;">({risk_label} · 이탈확률 {p:.0f}%)</span></div>'
+                '<div style="background:white;border-radius:8px;padding:16px 18px;'
+                'font-size:14px;line-height:1.9;color:#1f2937;white-space:pre-wrap;'
+                f'border:1px solid #dcfce7;">{script}</div>'
+                '<div style="font-size:12px;color:#9ca3af;margin-top:8px;">'
+                '※ 실제 상담 시 고객 상황에 맞게 자연스럽게 조율하세요.</div>'
+                '</div>',
+                unsafe_allow_html=True
+            )
 
     st.markdown('</div>', unsafe_allow_html=True)  # .content-wrap
 
@@ -602,10 +738,10 @@ elif st.session_state.page == "admin":
     # ── 스탯 카드 4개 ──────────────────────────────────────────────────────────
     sc1, sc2, sc3, sc4 = st.columns(4, gap="medium")
     for col, label, value, delta in [
-        (sc1, "총 데이터 행",     "100,000",  "    "),
-        (sc2, "이탈 고객 비율",   "33.1%",    "  "),
-        (sc3, "Feature 수",       "7",        "   "),
-        (sc4, "파이프라인 단계",  "전처리 → 튜닝 → 최종학습",   "    "),
+        (sc1, "총 데이터 행",     "100,000",  "synthetic_customer_churn.csv"),
+        (sc2, "이탈 고객 비율",   "26.5%",    "class_weight='balanced' 적용"),
+        (sc3, "Feature 수",       "7",        "Age · Tenure · Charges 등"),
+        (sc4, "파이프라인 단계",  "3-Step",   "전처리 → 튜닝 → 최종학습"),
     ]:
         with col:
             st.markdown(
@@ -728,25 +864,33 @@ elif st.session_state.page == "admin":
 
 # _________________________________________________
 
-st.markdown("""
-<div class="bottom-banner">
-    <span class="bottom-banner-text">전문 상담사가 서비스 도입을 도와드려요!</span>
-    <div class="bottom-banner-btns">
-        <a class="bottom-banner-btn" href="#">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
-                 stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-            </svg>
-            1:1 채팅 상담 &rsaquo;
-        </a>
-        <a class="bottom-banner-btn" href="#">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
-                 stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.15 12 19.79 19.79 0 0 1 1.07 3.38 2 2 0 0 1 3.05 1h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/>
-            </svg>
-            전화 상담 &rsaquo;
-        </a>
-    </div>
-</div>
-""", unsafe_allow_html=True)
 
+
+# ============================================================
+# 하단 상담 배너 (수정본)
+# ============================================================
+
+st.markdown("---")
+
+b1, b2, b3 = st.columns([5, 1, 1])
+
+with b1:
+    st.markdown("### 📞 전문 상담사가 서비스 도입을 도와드려요!")
+
+with b2:
+    if st.button("💬 채팅 상담", key="bottom_chat_btn"):
+        st.session_state.show_chat = True
+        st.session_state.show_call = False
+        st.rerun()
+
+with b3:
+    if st.button("📞 전화 상담", key="bottom_phone_btn"):
+        st.session_state.show_wait_msg = True
+        st.rerun()
+
+if st.session_state.show_wait_msg:
+    msg_box = st.empty()
+    msg_box.warning("📞 지금 대기자가 많아 조금만 기다려 주시면 감사합니다.")
+    time.sleep(5)
+    msg_box.empty()
+    st.session_state.show_wait_msg = False
