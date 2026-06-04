@@ -199,7 +199,7 @@ optimizer = torch.optim.Adam
 **3) 튜닝모델 실행시간**
 
 <p align="center">
-  <img src="../data/model_training_time_bar.png" alt="Tuned Model Training Time Comparison">
+  <img src="../data/model_training_time_bar.png" width="90%" alt="Tuned Model Training Time Comparison">
 </p>
 
 ---
