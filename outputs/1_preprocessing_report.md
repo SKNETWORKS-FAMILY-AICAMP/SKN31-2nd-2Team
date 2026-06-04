@@ -187,12 +187,12 @@ Target['Churn`] 변수를 LabelEcoder로 수치화(Yes=1, No=0)하여 연속형 
 
 
 ## 7.4 OneHotEncoding과 labelEcoding
-- 범주형(categorical) 변수에 대해서는 LabelEncoding을 함
+- 범주형 변수와 수치형 변수에 대해서 각 모델에 적합한 Encoding을 진행
 - 참고 사항 참조
 
 
 ## 7.5 Scaling
-- 수치형(numeric) 변수에 대해서는 별도의 Scaling를 하지 않음
+- 수치형 변수에 대해서 각 모델에 적합한 scaling을 진행
 - 참고 사항 참조
 
 ## 7.6 참고 사항

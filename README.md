@@ -295,17 +295,7 @@ Target['Churn`] 변수를 LabelEcoder로 수치화(Yes=1, No=0)하여 연속형 
   | X_test | 20,000 |
   | y_test | 20,000 |
 
-
-## 10.4 OneHotEncoding과 labelEcoding
-- 범주형(categorical) 변수에 대해서는 LabelEncoding을 함
-- 참고 사항 참조
-
-
-## 10.5 Scaling
-- 수치형(numeric) 변수에 대해서는 별도의 Scaling를 하지 않음
-- 참고 사항 참조
-
-## 10.6 참고 사항
+## 10.4 참고 사항
 
 **- 머신러닝에서의  Encoding과 Scaling 방법**
 
@@ -430,7 +420,7 @@ Target['Churn`] 변수를 LabelEcoder로 수치화(Yes=1, No=0)하여 연속형 
 | Deep Learning | 66.06 | -->
 
 <p align="center">
-  <img src="data/model_training_time_bar.png" width="70%" alt="Tuned Model Training Time Comparison">
+  <img src="data/model_training_time_bar.png" width="80%" alt="Tuned Model Training Time Comparison">
 </p>
 
 ---
