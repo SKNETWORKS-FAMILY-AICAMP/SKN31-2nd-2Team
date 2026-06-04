@@ -41,10 +41,10 @@
 | **TotalCharges** (총요금) | 2,926.1달러 | 2,268.0달러 | **-118.43달러** | 10,831.5달러 | **[오류 발견]** **총요금이 음수인 데이터(최소값: -118.43)** 가 존재 |
 
 ## 2.1 수치형 변수의 도수분포표
-![alt text](eda_plots/02_numerical_distributions.png)
+![alt text](../data/eda_plots/02_numerical_distributions.png)
 
 ## 2.2 수치형 변수의 Target 특성별 분포
-![alt text](eda_plots/02-1_numerical_distributions.png)
+![alt text](../data/eda_plots/02-1_numerical_distributions.png)
 - 가입기간이 짧을수록 이탈률이 높음
 - 월요금이 많을수록 이탈률이 높음
 
@@ -64,16 +64,16 @@
 | | Bank transfer | 19,855 | 19.86% | |
 
 ## 3.1 범주형 변수의 도수분포표
-![alt text](eda_plots/03_categorical_distributions.png)
+![alt text](../data/eda_plots/03_categorical_distributions.png)
 
 ## 3.2 범주형 변수의 Target 특성별 비율
-![alt text](eda_plots/03-1_categorical_distributions.png)
+![alt text](../data/eda_plots/03-1_categorical_distributions.png)
 - 단기계약일수록 이탈률아 높음
 
 # 4. 타겟 변수(Churn) 분포 분석
 
 모델이 예측해야 하는 핵심 타겟 변수인 **고객 이탈 여부 (`Churn`)** 비율 분석
-![이탈 분포](eda_plots/01_churn_distribution.png)
+![이탈 분포](../data/eda_plots/01_churn_distribution.png)
 
 - **이탈하지 않은 고객 (No):** 66,856명 (**66.86%**)
 - **이탈한 고객 (Yes):** 33,144명 (**33.14%**)
@@ -93,7 +93,7 @@
 # 5. 변수 간 상관관계 분석 (Correlation Matrix)
 
 Target['Churn`] 변수를 LabelEcoder로 수치화(Yes=1, No=0)하여 연속형 변수 상관관계 분석
-![상관관계](eda_plots/04_correlation_matrix.png)
+![상관관계](../data/eda_plots/04_correlation_matrix.png)
 
 * **상관관계(Correlation) 분석** 
   - `TotalCharges`(총요금)는 `Tenure`(가입 기간) 및 `MonthlyCharges`(월요금)와 상관계수가 각각 0.70과 0.62로 강한 양의 상관관계를 보임(TotalCharges가 Tenure × MonthlyCharges + 노이즈임)
@@ -127,7 +127,7 @@ Target['Churn`] 변수를 LabelEcoder로 수치화(Yes=1, No=0)하여 연속형 
   - 총요금에 음수(-)값이 있고 이는 환불, 프로모션 크레딧 또는 시스템 기록 오류일 수 있으므로 **데이터 전처리**가 필요
   - 뿐만아니라 총요금의 Box-plot 상 상한값을 벗어나는 이상치가 존재하여 **데이터 전처리**가 필요
 
-![alt text](eda_plots/06_numerical_boxplots.png)
+![alt text](../data/eda_plots/06_numerical_boxplots.png)
 
 
 
@@ -152,8 +152,8 @@ Target['Churn`] 변수를 LabelEcoder로 수치화(Yes=1, No=0)하여 연속형 
 - 로그변환은 왜도현상과 이상치 제거를 하지못해 **<u>BOX-COX 변환</u>** 추천
 
 ### 7.1.3 TotalCharges(총요금)의 이상치 처리 전후 비교
-![alt text](eda_plots/07_totalcharges_histogram_boxcox.png)
-![alt text](eda_plots/08_totalcharges_boxplot_boxcox.png)
+![alt text](../data/eda_plots/07_totalcharges_histogram_boxcox.png)
+![alt text](../data/eda_plots/08_totalcharges_boxplot_boxcox.png)
 ## 7.2 Feature와 Target 분리(X, y 분리)
 
 - 총 컬럼(9개): CustomerID, Age, Gender, Tenure, MonthlyCharges, Contract, PaymentMethod, TotalCharges, Churn
