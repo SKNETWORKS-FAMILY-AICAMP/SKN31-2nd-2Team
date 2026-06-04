@@ -1,9 +1,19 @@
 # SKN31-2nd-2Team
+<p align="center">
+<img src="logo.png" width="70%">
+</p>
 
 ## 팀원 및 역할
 
-
-**프로젝트 명:** 고객 이탈(Churn) 예측 모델 구축을 위한 데이터 탐색
+| 이름 | 역할 (Role) | GitHub |
+| :--- | :--- | :---: |
+| **김가율** | PM, LightGBM 모델링, Readme 제작 | [![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/Kim-gayul) |
+| **이영창** | 데이터 전처리, Deeplearning 모델링, 발표 | [![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/lyc9872-lab) |
+| **이용혁** | 전처리 결과서, RandomForest 모델링 | [![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/leeyonghyok) |
+| **정형섭** | 학습 결과서, GradientBoosting 모델링 | [![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/jhs7067) |
+| **박연아** | 웹 화면 구현(Streamlit, HTML), XGBoost 모델링 | [![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/yeona9549) |
+---
+## **프로젝트 명:** 고객 이탈(Churn) 예측 모델 구축을 위한 데이터 탐색
 
 **분석 데이터:** synthetic_customer_churn_100k.csv  
 (출처 : https://www.kaggle.com/datasets/dhrubangtalukdar/telco-customer-churn-data)
@@ -15,79 +25,42 @@
 
 ```
 SKN31-2nd-2Team
-├─ app
-│  └─ app.py                                    # streamlit 화면 구현
+├─ app.py                                                                   # streamlit 화면 구현
 ├─ data
-│  ├─ eda_plots
-│  │  ├─ 01_churn_distribution.png
-│  │  ├─ 02_numerical_distributions.png
-│  │  ├─ 03_categorical_churn_analysis.png
-│  │  └─ 04_correlation_matrix.png
-│  └─ synthetic_customer_churn_100k.csv
+│  ├─ eda_plots                                                             # EDA 그래프 데이터 모음
+│  └─ synthetic_customer_churn_100k.csv                                     # 원본 데이터셋 (Raw Data)
 ├─ models
-│  ├─ 01_RandomForest                           # RandomForest 모델링 데이터
-│  │  ├─ data
-│  │  │  └─ synthetic_customer_churn_100k.csv   # 원본 데이터셋 (Raw Data)
-│  │  ├─ data_scaling.py
-│  │  ├─ eval.py
-│  │  ├─ guide.md
-│  │  ├─ modeling.py
-│  │  └─ saved_models
-│  │     ├─ randomforest_model.pkl
-│  │     ├─ x_test.pkl
-│  │     ├─ x_train.pkl
-│  │     ├─ x_val.pkl
-│  │     ├─ y_test.pkl
-│  │     ├─ y_train.pkl
-│  │     └─ y_val.pkl
-│  ├─ 02_GradientBoosting                       # GradientBoosting 모델링 데이터
-│  │  ├─ gb_feature_importance.png              # GradientBoosting 특성 중요도 이미지
-│  │  ├─ gb_tuning_top10_results.csv            # GradientBoosting 하이퍼파라미터 튜닝 상위 10개 결과 csv
-│  │  ├─ GradientBoosting_main.py      
-│  │  ├─ GradientBoosting_01_preprocessing.py   #  GradientBoosting 전처리 모듈
-│  │  └─ GradientBoosting_02_training.py     #  GradientBoosting 학습, 검증, 평가 모듈
-│  ├─ 03_XGBoost                                # XGBoost 모델링 데이터
-│  │  ├─ app.py
-│  │  ├─ data_scaling.py
-│  │  ├─ guide.md
-│  │  ├─ model_comparison_results.csv
-│  │  ├─ synthetic_customer_churn_100k.csv
-│  │  ├─ XGBoost_main.py
-│  │  ├─ XGBoost_pipeline_01_preprocessing.py
-│  │  ├─ XGBoost_pipeline_02_training.py
-│  │  ├─ XGBoost_pipeline_03_tuning.py
-│  │  ├─ xgb_feature_importance.png
-│  │  └─ xgb_tuning_top10_results.csv
-│  ├─ 04_LightGBM                               # LightGBM 모델링 데이터
-│  │  ├─ guide.md
-│  │  ├─ LightGBM_01_preprocessing.py
-│  │  ├─ LightGBM_02_training.py
-│  │  ├─ LightGBM_03_tuning.py
-│  │  ├─ LightGBM_main.py
-│  │  └─ saved_data
-│  │     ├─ lgb_feature_importance.png
-│  │     └─ lgb_tuning_top10_results.csv
-│  └─ 05_DeepLearning                           # DeepLearning 모델링 데이터
-│     ├─ data
-│     │  └─ synthetic_customer_churn_100k.csv
-│     ├─ data_scaling.py
-│     ├─ deep_learning_model.py
-│     ├─ final_test.py
-│     ├─ guide.md
-│     ├─ saved_model
-│     │  └─ deep_model.pt
-│     ├─ train.py
-│     └─ training.py
+│  ├─ RandomForest                                                       # RandomForest 모델링 데이터
+│  ├─ GradientBoosting                                                   # GradientBoosting 모델링
+│  ├─ XGBoost                                                            # XGBoost 모델링 데이터
+│  ├─ DeepLearning                                                       # DeepLearning 모델링 데이터
+│  └─ LightGBM                                                              # LightGBM 모델링 데이터
 ├─ outputs
-│  ├─ 1_preprocessing_report.md                 # 전처리 결과서
-│  └─ 2_model_training_report.md                # 학습결과서
-├─ README.md                                    # 프로젝트 소개 및 데이터 명세서
+│  ├─ 1_preprocessing_report.md                                             # 전처리 결과서
+│  ├─ 2_model_training_report.md                                            # 학습 결과서
+│  └─ model_training_time_bar.png
+├─ README.md                                                                # 프로젝트 소개 및 데이터 명세서
 └─ requirements.txt
 
 ```
 ---
 ## Tech Stack
+### 🧠 AI & Data Science
+<img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white"/> <img src="https://img.shields.io/badge/PyTorch-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white"/> <img src="https://img.shields.io/badge/TensorFlow-FF6F00?style=for-the-badge&logo=tensorflow&logoColor=white"/> <img src="https://img.shields.io/badge/scikit--learn-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white"/> <img src="https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas&logoColor=white"/>
 
+### 💻 Frontend
+<img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"/> <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white"/> <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white"/>
+
+### ⚙️ Backend
+<img src="https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white"/> 
+
+### 🚀 DevOps & Tools
+<img src="https://img.shields.io/badge/Git-F05033?style=for-the-badge&logo=git&logoColor=white"/> <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white"/> 
+
+---
+### WBS
+---
+![alt text](image.png)
 ---
 ## 1. 프로젝트 배경
 
@@ -157,10 +130,10 @@ SKN31-2nd-2Team
 | **TotalCharges** (총요금) | 2,926.1달러 | 2,268.0달러 | **-118.43달러** | 10,831.5달러 | **[오류 발견]** **총요금이 음수인 데이터(최소값: -118.43)** 가 존재 |
 
 ## 5.1 수치형 변수의 도수분포표
-![alt text](eda_plots/02_numerical_distributions.png)
+![alt text](data/eda_plots/02_numerical_distributions.png)
 
 ## 5.2 수치형 변수의 Target 특성별 분포
-![alt text](eda_plots/02-1_numerical_distributions.png)
+![alt text](data/eda_plots/02-1_numerical_distributions.png)
 - 가입기간이 짧을수록 이탈률이 높음
 - 월요금이 많을수록 이탈률이 
 
@@ -180,16 +153,16 @@ SKN31-2nd-2Team
 | | Bank transfer | 19,855 | 19.86% | |
 
 ## 6.1 범주형 변수의 도수분포표
-![alt text](eda_plots/03_categorical_distributions.png)
+![alt text](data/eda_plots/03_categorical_distributions.png)
 
 ## 6.2 범주형 변수의 Target 특성별 비율
-![alt text](eda_plots/03-1_categorical_distributions.png)
-- 단기계약일수록 이탈률아 높음
+![alt text](data/eda_plots/03-1_categorical_distributions.png)
+- 단기계약일수록 이탈률이 높음
 
 ## 7. 타겟 변수(Churn) 분포 분석
 
 모델이 예측해야 하는 핵심 타겟 변수인 **고객 이탈 여부 (`Churn`)** 비율 분석
-![이탈 분포](eda_plots/01_churn_distribution.png)
+![이탈 분포](data/eda_plots/01_churn_distribution.png)
 
 - **이탈하지 않은 고객 (No):** 66,856명 (**66.86%**)
 - **이탈한 고객 (Yes):** 33,144명 (**33.14%**)
@@ -209,7 +182,7 @@ SKN31-2nd-2Team
 ## 8. 변수 간 상관관계 분석 (Correlation Matrix)
 
 Target['Churn`] 변수를 LabelEcoder로 수치화(Yes=1, No=0)하여 연속형 변수 상관관계 분석
-![상관관계](eda_plots/04_correlation_matrix.png)
+![상관관계](data/eda_plots/04_correlation_matrix.png)
 
 * **상관관계(Correlation) 분석** 
   - `TotalCharges`(총요금)는 `Tenure`(가입 기간) 및 `MonthlyCharges`(월요금)와 상관계수가 각각 0.70과 0.62로 강한 양의 상관관계를 보임(TotalCharges가 Tenure × MonthlyCharges + 노이즈임)
@@ -240,10 +213,10 @@ Target['Churn`] 변수를 LabelEcoder로 수치화(Yes=1, No=0)하여 연속형 
 - **결측치 현황** 
   - 모든 변수의 Non-Null Count가 100,000개로 일치하여 결측치 미존재
 - **이상치 현황**
-  - 총요금에 음수(-)값이 있고 이는 환불, 프로모션 크레딧 또는 시스템 기록 오류일 수 있으므로 **데이터 전처리**가 필요
-  - 뿐만아니라 총요금의 Box-plot 상 상한값을 벗어나는 이상치가 존재하여 **데이터 전처리**가 필요
+  - 총요금에 음수(-)값이 있고 이는 환불, 프로모션 크레딧 또는 시스템 기록 오류일 수 있으므로 모델에 적합한 데이터 전처리가 필요
+  - 뿐만아니라 총요금의 Box-plot 상 상한값을 벗어나는 이상치가 존재하여 모델에 적합한 데이터 전처리가 필요
 
-![alt text](eda_plots/06_numerical_boxplots.png)
+![alt text](data/eda_plots/06_numerical_boxplots.png)
 
 
 ## 10. 데이터 전처리
@@ -254,21 +227,12 @@ Target['Churn`] 변수를 LabelEcoder로 수치화(Yes=1, No=0)하여 연속형 
 - 총 100,000개 중 265개(0.265%)의 음수(-)가 존재
 - 환불, 프로모션 크레딧 또는 시스템 기록 오류 가능성
 - 전처리 방법
-  1. 음수(-)를 0으로 대채
-  2. 음수(-) 행 삭제
-- 원인을 모르기 때문에 **<u>행 삭제</u>** 추천
+  1. 음수(-)를 0으로 대체
 
 ### 10.1.2 TotalCharges(총요금)의 상한 이상치 처리
 - 총 100,000개 중 이상치 기준 상한인 9540.32를 벗어난 이상치가 841개(0.841%)가 존재
-- 장기 고객의 경우 자연스러운 현상
-- 전처리 방법
-  1. 이상치 단순 삭제
-  2. 음수(-) 행 삭제 후 BOX-COX 변환
-- 로그변환은 왜도현상과 이상치 제거를 하지못해 **<u>BOX-COX 변환</u>** 추천
+- 장기 고객의 경우 나타나는 자연스러운 현상으로 LightGBM 모델에서 전처리 진행하지 않음
 
-### 10.1.3 TotalCharges(총요금)의 이상치 처리 전후 비교
-![alt text](eda_plots/07_totalcharges_histogram_boxcox.png)
-![alt text](eda_plots/08_totalcharges_boxplot_boxcox.png)
 ## 10.2 Feature와 Target 분리(X, y 분리)
 
 - 총 컬럼(9개): CustomerID, Age, Gender, Tenure, MonthlyCharges, Contract, PaymentMethod, TotalCharges, Churn
@@ -357,4 +321,194 @@ Target['Churn`] 변수를 LabelEcoder로 수치화(Yes=1, No=0)하여 연속형 
 
 ## 11. 모델 학습 결과
 
+## 1. 모델링 전략
+
+### 1-1. 평가지표 선정
+
+본 프로젝트는 Telco 고객 이탈(Churn) 예측 문제를 다룬다.  
+평가지표는 Accuracy, Recall, Precision, F1-Score, ROC-AUC로 5개 지표를 선정하였다.
+최종 모델 선정에서는 ROC-AUC를 가장 중요하게 보고, Accuracy, Precision, Recall, F1-Score를 보조 지표로 함께 확인하였다. ROC-AUC는 모델이 이탈 가능성이 높은 고객과 낮은 고객을 얼마나 잘 구분하는지 보여주므로, 고객별 이탈 위험도를 판단하는 데 중요한 기준이 된다.
+
+| 지표 | 선정 이유 |
+| --------- | ------------------------------------ |
+| Accuracy | 전체 예측 중 정답을 맞힌 비율을 확인하여 모델의 기본 정확도를 비교하기 위해 선정 |
+| Recall | 실제 이탈 고객을 얼마나 놓치지 않고 찾아내는지 평가하기 위해 선정 |
+| Precision | 이탈로 예측한 고객 중 실제 이탈 고객의 비율을 확인하여 불필요한 마케팅 대상을 줄일 수 있는지 평가하기 위해 선정 |
+| F1-Score | Precision과 Recall의 균형을 함께 평가하기 위해 선정 |
+| ROC-AUC | 이탈 고객과 비이탈 고객을 구분하는 전체적인 분류 성능을 평가하기 위해 선정. 특히 고객별 이탈 위험도를 잘 구분하는지 판단하는 핵심 지표로 사용 |
+
+---
+
+### 1-2. 후보 모델 선정
+
+후보 모델은 Random Forest, Gradient Boosting, XGBoost, LightGBM, Deep Learning으로 5개 모델을 선정하였다.
+
+| 모델 | 유형 | 선정 근거 |
+| ------------------- | ----- | ------------------------------------------ |
+| Random Forest | 앙상블 | 여러 Decision Tree를 결합해 안정적인 성능을 기대할 수 있고, Feature Importance를 통해 주요 변수를 해석할 수 있어 선정 |
+| Gradient Boosting | 부스팅 | 이전 모델의 오차를 순차적으로 보정하는 방식으로 정형 데이터 분류에서 성능 개선 가능성을 확인하기 위해 선정 |
+| XGBoost | 부스팅 | 정형 데이터 분류 문제에서 성능이 검증된 대표 부스팅 모델이므로, 튜닝을 통한 성능 향상 가능성을 비교하기 위해 선정 |
+| LightGBM | 부스팅 | 학습 속도와 메모리 효율이 좋아 데이터가 많아질 경우에도 운영 효율성을 기대할 수 있어 선정 |
+| Deep Learning | 신경망 | 트리 기반 모델과 다른 방식의 비선형 패턴 학습 가능성과 성능을 비교하기 위해 선정 |
+
+---
+
+### 1-3. 실험 계획
+
+* 5개 후보 모델(Random Forest, Gradient Boosting, XGBoost, LightGBM, Deep Learning)을 5명의 팀원이 각각 하나씩 담당하여 학습을 진행한다.
+* 먼저 공통 비교 기준을 만들기 위해 기본 전처리(음수값 0으로 변환, Label Encoding)를 동일하게 적용한 데이터로 각 모델을 학습한다.
+* 이후 각 담당자는 모델 특성에 맞는 추가 전처리와 하이퍼파라미터 튜닝을 적용하여 성능 개선 가능성을 확인한다.
+* 최종 비교에서는 기본 전처리 성능과 모델별 전처리 및 튜닝 성능을 함께 제시하여, 동일 조건에서의 모델 성능과 개별 최적화 후 성능을 모두 비교한다.
+* 모델 성능은 1-1에서 선정한 5개의 평가지표(Accuracy, Recall, Precision, F1-Score, ROC-AUC)를 기준으로 평가한다.
+* 성능 지표뿐만 아니라 각 튜닝 모델의 실행 시간도 함께 측정하여, 예측 성능과 학습 효율성을 모두 비교한다.
+* 최종 모델 선정 시에는 ROC-AUC를 핵심 성능 지표로 보고, 모델 간 성능 차이가 크지 않은 경우 실행 시간과 데이터 처리 효율성도 주요 선정 기준으로 함께 고려한다.
+
+
+---
+
+## 2. 모델 종합 비교 및 최적 모델 선정
+
+### 2-1. 전체 모델 성능 비교표
+**1) 기본 전처리(음수값 0으로 변환, Label Encoding)** 
+| 순번 | 모델명 | Accuracy (정확도) | Recall (재현율) | Precision (정밀도) | F1-Score | ROC-AUC |
+| :---: | :--- | :---: | :---: | :---: | :---: | :---: |
+| **1** | **Random Forest** | **0.7600** | 0.7100 | **0.7300** | **0.7200** | 0.8045 |
+| **2** | **GradientBoosting** | 0.7515 | **0.7200** | 0.7200 | **0.7200** | 0.8051 |
+| **3** | **XGBoost** | 0.7082 | 0.6794 | 0.5483 | 0.6068 | 0.7982 |
+| **4** | **LightGBM** | **0.7600** | 0.5515 | 0.6668 | 0.6037 | **0.8263** |
+| **5** | **Deep Learning** | 0.7400 | 0.7100 | 0.7100 | 0.7100 | 0.7976 |
+
+<br />
+
+**2) 모델별 전처리 및 튜닝**
+| 순번 | 모델명 | Accuracy (정확도) | Recall (재현율) | Precision (정밀도) | F1-Score | ROC-AUC |
+| :---: | :--- | :---: | :---: | :---: | :---: | :---: |
+| **1** | **Random Forest** | **0.7600** | **0.7100** | **0.7300** | **0.7200** | **0.8069** |
+| **2** | **GradientBoosting** | 0.7555 | 0.6200 | 0.6400 | 0.6300 | 0.8062 |
+| **3** | **XGBoost** | 0.7260 | 0.6588 | 0.5757 | 0.6145 | 0.8038 |
+| **4** | **LightGBM** | 0.7528 | 0.6200 | 0.6300 | 0.6200 | 0.8055 |
+| **5** | **Deep Learning** | 0.7500 | 0.5900 | 0.6300 | 0.6100 | 0.8004 |
+
+<br />
+
+**3) 튜닝모델 실행시간**
+
+<!-- | 모델명 | 실행 시간(초) |
+| --- | ---: |
+| Random Forest | 85.04 |
+| Gradient Boosting | 69.98 |
+| XGBoost | 8.79 |
+| LightGBM | 1.96 |
+| Deep Learning | 66.06 | -->
+
+<p align="center">
+  <img src="data/model_training_time_bar.png" width="70%" alt="Tuned Model Training Time Comparison">
+</p>
+
+---
+
+### 2-2. 지표별 최고 성능 모델
+
+**1) 기본 전처리(음수값 0으로 변환, Label Encoding)**
+
+| 지표 | 최고 모델 | 값 |
+| --- | --- | ---: |
+| Accuracy (정확도) | LightGBM / Random Forest | 0.7600 |
+| Recall (재현율) | GradientBoosting | 0.7200 |
+| Precision (정밀도) | Random Forest | 0.7300 |
+| F1-Score | GradientBoosting / Random Forest | 0.7200 |
+| ROC-AUC | LightGBM | 0.8263 |
+
+<br />
+
+**2) 모델별 전처리 및 튜닝**
+
+| 지표 | 최고 모델 | 값 |
+| --- | --- | ---: |
+| Accuracy (정확도) | Random Forest | 0.7600 |
+| Recall (재현율) | Random Forest | 0.7100 |
+| Precision (정밀도) | Random Forest | 0.7300 |
+| F1-Score | Random Forest | 0.7200 |
+| ROC-AUC | Random Forest | 0.8069 |
+
+---
+
+### 2-3. 최적 모델 선정
+
+**선정 모델**: LightGBM
+
+**선정 근거**
+
+1. 기본 전처리 기준에서는 LightGBM이 ROC-AUC 0.8263으로 가장 높은 분류 구분력을 보였다. 본 프로젝트에서 ROC-AUC를 핵심 지표로 설정했기 때문에, 동일 전처리 조건에서 가장 높은 ROC-AUC를 기록한 LightGBM을 중요하게 평가하였다.
+2. 모델별 전처리 및 튜닝 기준에서는 Random Forest가 Accuracy 0.7600, ROC-AUC 0.8069, Precision 0.7300, Recall 0.7100, F1-Score 0.7200으로 가장 좋은 결과를 보였다. 따라서 단순 튜닝 성능만 보면 Random Forest도 충분히 경쟁력 있는 모델이다.
+3. 전체 결과를 보면 모델 간 점수 차이가 매우 크지는 않았다. 기본 전처리와 모델별 전처리 및 튜닝 결과 모두에서 상위 모델들의 Accuracy, ROC-AUC, F1-Score 차이가 근소했기 때문에, 단순히 특정 지표 하나의 우위만으로 최종 모델을 결정하기보다는 성능과 운영 효율을 함께 고려하였다.
+4. Random Forest는 여러 Decision Tree를 병렬적으로 많이 생성하는 방식이므로, 데이터가 더 많아지거나 트리 수가 증가할수록 학습 시간과 메모리 사용량이 커질 수 있다. 반면 LightGBM은 대용량 정형 데이터 처리에 최적화된 부스팅 모델로, 학습 속도와 메모리 효율 측면에서 강점이 있다.
+5. 향후 고객 데이터가 100,000건보다 더 커지거나, 정기적으로 재학습해야 하는 운영 환경을 고려하면 빠른 학습 속도와 효율적인 자원 사용이 중요하다. LightGBM은 이러한 확장성 측면에서 Random Forest보다 운영 부담이 적고, 반복 실험과 모델 개선에도 유리하다.
+6. 따라서 최종 모델은 공통 전처리 기준에서 핵심 지표인 ROC-AUC가 가장 높고, 데이터 증가 시 처리 속도와 메모리 효율, 운영 확장성 측면에서도 장점이 있는 LightGBM으로 선정하였다.
+
+---
+
+## 3. 모델 해석
+
+### 3-1. 특성 중요도
+
+최종 모델인 LightGBM 기준 Feature Importance를 확인하였다. 중요도 분석 결과, `MonthlyCharges`가 가장 높은 중요도를 보였고, 그 다음으로 `Tenure`, `TotalCharges`, `Age`가 주요 변수로 나타났다. 이는 고객의 요금 수준, 가입 기간, 누적 이용 금액, 연령 정보가 이탈 예측에 중요한 영향을 준다는 것을 의미한다.
+
+<p align="center">
+  <img src="./models/LightGBM/saved_data/lgb_feature_importance.png" width="70%" alt="LightGBM Feature Importance">
+</p>
+
+주요 Feature는 다음과 같다.
+
+| 주요 Feature | 해석 |
+| --- | --- |
+| `MonthlyCharges` | 월 청구 금액 수준은 고객이 체감하는 비용 부담과 연결되며, 이탈 가능성을 판단하는 핵심 변수로 작용 |
+| `Tenure` | 가입 기간은 고객 충성도와 서비스 이용 안정성을 반영하며, 가입 기간이 짧은 고객일수록 이탈 가능성이 높게 나타날 수 있음 |
+| `TotalCharges` | 누적 청구 금액은 고객의 전체 이용 규모를 나타내며, `Tenure`, `MonthlyCharges`와 함께 고객 이용 패턴을 설명 |
+| `Age` | 연령대별 서비스 이용 성향이나 가격 민감도 차이가 이탈 예측에 반영될 수 있음 |
+| `Contract` | 계약 유형은 고객의 서비스 유지 가능성과 직접적으로 관련되며, 단기 계약 고객은 장기 계약 고객보다 이탈 위험이 높을 수 있음 |
+| `Gender` | 성별에 따른 이용 패턴 차이가 일부 반영될 수 있으나, 중요도는 주요 수치형 변수보다 낮게 나타남 |
+| `PaymentMethod` | 결제 방식은 고객의 이용 편의성이나 결제 안정성과 관련될 수 있으나, 본 모델에서는 상대적으로 낮은 중요도를 보임 |
+
+---
+
+### 3-2. 주요 변수 기반 해석
+
+LightGBM의 Feature Importance를 바탕으로 보면, 고객 이탈 예측에는 요금 관련 변수와 이용 기간 관련 변수가 가장 크게 작용한다. 특히 `MonthlyCharges`와 `Tenure`는 고객이 서비스를 계속 유지할지 판단하는 데 중요한 신호로 해석할 수 있다.
+
+| 주요 Feature 후보 | 해석 방향 |
+| --- | --- |
+| `MonthlyCharges` | 월 요금이 높을수록 비용 부담이 커질 수 있으며, 이탈 가능성 증가 요인으로 작용할 수 있음 |
+| `Tenure` | 가입 기간이 짧은 고객은 서비스에 대한 고착도가 낮아 이탈 위험이 높을 수 있고, 장기 고객은 상대적으로 유지 가능성이 높을 수 있음 |
+| `TotalCharges` | 누적 청구 금액은 고객의 이용 이력과 규모를 나타내며, 가입 기간 및 월 요금과 함께 고객 유지 패턴을 설명 |
+| `Age` | 연령에 따라 서비스 이용 목적, 요금 민감도, 계약 선호도가 달라질 수 있음 |
+| `Contract` | 월 단위 계약과 장기 계약 간 이탈 위험 차이를 파악하는 데 활용 가능 |
+| `PaymentMethod` | 결제 방식에 따라 고객의 서비스 이용 편의성이나 결제 안정성 차이가 나타날 수 있음 |
+
+---
+
+### 3-3. 고위험 고객 프로파일
+
+최종 모델의 주요 변수 해석을 바탕으로, 이탈 가능성이 높은 고객군은 다음과 같이 정리할 수 있다. 이 프로파일은 실제 마케팅 대상 고객을 선별하거나, 이탈 방지 캠페인의 우선순위를 정하는 데 활용할 수 있다.
+
+* 월 청구 금액이 높아 비용 부담이 큰 고객
+* 가입 기간이 짧아 서비스 이용 안정성이 아직 낮은 고객
+* 누적 청구 금액이 낮거나 이용 이력이 충분히 쌓이지 않은 고객
+* 월 단위 계약 등 해지 전환이 쉬운 계약 유형에 속한 고객
+* 특정 결제 방식 사용으로 결제 편의성이나 서비스 만족도가 낮을 가능성이 있는 고객
+* LightGBM 모델이 산출한 이탈 예측 확률이 0.50 이상인 고객
+
+---
+
+## 4. 결론
+
+본 보고서에서는 Telco 고객 이탈 예측을 위해 Random Forest, Gradient Boosting, XGBoost, LightGBM, Deep Learning 총 5개 후보 모델을 학습하고 비교하였다. 평가는 Accuracy, Recall, Precision, F1-Score, ROC-AUC를 기준으로 진행하였으며, 이 중 고객별 이탈 위험도를 얼마나 잘 구분하는지 확인할 수 있는 ROC-AUC를 핵심 지표로 사용하였다.
+
+실험은 기본 전처리 기준 성능과 모델별 전처리 및 튜닝 성능을 나누어 비교하였다. 기본 전처리 기준에서는 LightGBM이 ROC-AUC 0.8263으로 가장 높은 분류 구분력을 보였고, 모델별 전처리 및 튜닝 기준에서는 Random Forest가 주요 지표에서 가장 높은 성능을 보였다. 다만 전체적으로 모델 간 성능 차이는 크지 않았기 때문에, 최종 모델 선정에서는 성능뿐만 아니라 실행 시간과 데이터 처리 효율성도 함께 고려하였다.
+
+튜닝 모델 실행 시간 비교 결과 LightGBM은 1.96초로 가장 빠른 실행 시간을 보였으며, Random Forest(85.04초), Gradient Boosting(69.98초), Deep Learning(66.06초)보다 학습 효율성이 높았다. 향후 데이터가 100,000건보다 더 많아지거나 정기적으로 재학습해야 하는 운영 환경을 고려하면, LightGBM의 빠른 학습 속도와 메모리 효율은 중요한 장점이 된다.
+
+따라서 최종 모델은 LightGBM으로 선정하였다. LightGBM은 기본 전처리 기준에서 핵심 지표인 ROC-AUC가 가장 높았고, 실행 시간과 운영 효율성 측면에서도 가장 적합한 모델로 판단된다. 또한 Feature Importance를 통해 `MonthlyCharges`, `Tenure`, `TotalCharges`, `Age` 등 고객 이탈에 영향을 주는 주요 변수를 해석할 수 있어, 향후 고위험 고객군을 파악하고 이탈 방지 전략을 수립하는 데 활용할 수 있다.
+
 ## 12. 프로젝트 회고
+
