@@ -25,61 +25,21 @@
 
 ```
 SKN31-2nd-2Team
-├─ app.py         # streamlit 화면 구현
+├─ app.py                                                                   # streamlit 화면 구현
 ├─ data
-│  ├─ eda_plots   # EDA 그래프 데이터 모음
-│  └─ synthetic_customer_churn_100k.csv   # 원본 데이터셋 (Raw Data)
-├─ logo.png
+│  ├─ eda_plots                                                             # EDA 그래프 데이터 모음
+│  └─ synthetic_customer_churn_100k.csv                                     # 원본 데이터셋 (Raw Data)
 ├─ models
-│  ├─ 01_RandomForest   # RandomForest 모델링 데이터
-│  │  ├─ data
-│  │  │  └─ synthetic_customer_churn_100k.csv
-│  │  ├─ data_scaling.py    # RandomForest 전처리 모듈
-│  │  ├─ eval.py    # RandomForest 예측, 평가 모듈
-│  │  ├─ guide.md
-│  │  ├─ modeling.py    # RandomForest 학습, 검증 모듈
-│  │  └─ saved_models   # RandomForest 모델 저장
-│  ├─ 02_GradientBoosting   # GradientBoosting 모델링
-│  │  ├─ gb_feature_importance.png    # GradientBoosting 특성 중요도 이미지
-│  │  ├─ gb_tuning_top10_results.csv  # GradientBoosting 튜닝 top10 결과
-│  │  ├─ GradientBoosting_01_preprocessing.py # GradientBoosting 전처리 모듈
-│  │  ├─ GradientBoosting_02_training.py  # GradientBoosting 학습, 검증, 평가 모듈
-│  │  └─ GradientBoosting_main.py   # GradientBoosting 실행 모듈
-│  ├─ 03_XGBoost    # XGBoost 모델링 데이터
-│  │  ├─ guide.md
-│  │  ├─ model_comparison_results.csv
-│  │  ├─ saved_model
-│  │  │  ├─ xgb_model.pkl   # 저장된 학습 완료 XGBoost 모델
-│  │  │  └─ xgb_processor.pkl   # 저장된 전처리 객체
-│  │  ├─ XGBoost_main.py    # XGBoost 실행 메인 모듈
-│  │  ├─ XGBoost_pipeline_01_preprocessing.py   # XGBoost 전처리 모듈
-│  │  ├─ XGBoost_pipeline_02_training.py    # XGBoost 학습, 검증, 평가 모듈
-│  │  ├─ XGBoost_pipeline_03_tuning.py    # XGBoost 하이퍼파라미터 튜닝 모듈
-│  │  ├─ xgb_feature_importance.png   # XGBoost 특성 중요도 이미지
-│  │  └─ xgb_tuning_top10_results.csv   # XGBoost 하이퍼파라미터 튜닝 상위 10개 결과 csv
-│  ├─ 05_DeepLearning   # DeepLearning 모델링 데이터
-│  │  ├─ data_scaling.py    # # deep_learning 전처리 모듈
-│  │  ├─ deep_learning_model.py   # 딥러닝 모델 정의 모듈
-│  │  ├─ final_test.py    # deep_learning 평가, 평가지표  모듈
-│  │  ├─ guide.md
-│  │  ├─ saved_model
-│  │  │  └─ deep_model.pt
-│  │  ├─ train.py   # deep_learning 학습,검증 모듈
-│  │  └─ training.py    # deep_learning 학습,검증 실행 모듈
-│  └─ LightGBM    # LightGBM 모델링 데이터
-│     ├─ guide.md
-│     ├─ LightGBM_01_preprocessing.py   # LightGBM 전처리 모듈
-│     ├─ LightGBM_02_training.py    # LightGBM 학습, 검증 모듈
-│     ├─ LightGBM_03_tuning.py    # LightGBM 튜닝 모듈
-│     ├─ LightGBM_main.py   # LightGBM 실행 메인 모듈
-│     └─ saved_data
-│        ├─ lgb_feature_importance.png    # LightGBM feature 중요도
-│        └─ lgb_tuning_top10_results.csv    # LightGBM 튜닝 상위 10개 결과
+│  ├─ RandomForest                                                       # RandomForest 모델링 데이터
+│  ├─ GradientBoosting                                                   # GradientBoosting 모델링
+│  ├─ XGBoost                                                            # XGBoost 모델링 데이터
+│  ├─ DeepLearning                                                       # DeepLearning 모델링 데이터
+│  └─ LightGBM                                                              # LightGBM 모델링 데이터
 ├─ outputs
-│  ├─ 1_preprocessing_report.md   # 전처리 결과서
-│  ├─ 2_model_training_report.md    # 학습결과서
+│  ├─ 1_preprocessing_report.md                                             # 전처리 결과서
+│  ├─ 2_model_training_report.md                                            # 학습 결과서
 │  └─ model_training_time_bar.png
-├─ README.md    # 프로젝트 소개 및 데이터 명세서
+├─ README.md                                                                # 프로젝트 소개 및 데이터 명세서
 └─ requirements.txt
 
 ```
@@ -97,6 +57,10 @@ SKN31-2nd-2Team
 ### 🚀 DevOps & Tools
 <img src="https://img.shields.io/badge/Git-F05033?style=for-the-badge&logo=git&logoColor=white"/> <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white"/> 
 
+---
+### WBS
+---
+![alt text](image.png)
 ---
 ## 1. 프로젝트 배경
 
