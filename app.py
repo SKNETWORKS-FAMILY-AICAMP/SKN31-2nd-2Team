@@ -35,7 +35,7 @@ except ImportError:
 DATA_PATH    = "data/synthetic_customer_churn_100k.csv"
 TUNING_FILE  = "models/04_LightGBM/saved_data/lgb_tuning_top10_results.csv"
 IMG_PATH     = "models/04_LightGBM/saved_data/lgb_feature_importance.png"
-LOGO_PATH    = "logo.png"   # ← 로고 파일을 여기에 배치하세요
+LOGO_PATH    = "image/logo.png"   # ← 로고 파일을 여기에 배치하세요
 
 # ── 페이지 기본 설정 ─────────────────────────────────────────────────────────
 st.set_page_config(
