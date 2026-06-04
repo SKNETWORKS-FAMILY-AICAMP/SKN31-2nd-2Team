@@ -1,18 +1,39 @@
 # SKN31-2nd-2Team
 <p align="center">
-<img src="logo.png" width="70%">
+<img src="image/logo.png" width="70%">
 </p>
 
 ## 팀원 및 역할
+<div align="center">
+<table align="center">
+  <tr>
+    <td align="center" width="190px"><img src="image/Image_3.png" width="100" style="object-fit: contain; aspect-ratio: 1/1;"></td>
+    <td align="center" width="190px"><img src="image/Image_2.png" width="100" style="object-fit: contain; aspect-ratio: 1/1;"></td>
+    <td align="center" width="190px"><img src="image/Image_4.png"width="100" style="object-fit: contain; aspect-ratio: 1/1;"></td>
+    <td align="center" width="190px"><img src="image/Image_1.png" width="100" style="object-fit: contain; aspect-ratio: 1/1;"></td>
+    <td align="center" width="190px"><img src="image/Image_5.png" width="100" style="object-fit: contain; aspect-ratio: 1/1;"></td>
+  </tr>
+  <tr>
+    <td align="center"><b>김가율(PM)</b></td>
+    <td align="center"><b>정형섭</b></td>
+    <td align="center"><b>박연아</b></td>
+    <td align="center"><b>이용혁</b></td>
+    <td align="center"><b>이영창</b></td>
+  </tr>
+    <tr>
+    <td align="center">Readme<br>LightGBM</td>
+    <td align="center">학습 결과서<br>GradientBoosting</td>
+    <td align="center">Streamlit<br>XGBoost</td>
+    <td align="center">전처리 결과서<br>RandomForest</td>
+    <td align="center">발표<br>Deeplearning</td>
+  </tr>
+  
+</table>
 
-| 이름 | 역할 (Role) | GitHub |
-| :--- | :--- | :---: |
-| **김가율** | PM, LightGBM 모델링, Readme 제작 | [![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/Kim-gayul) |
-| **이영창** | 데이터 전처리, Deeplearning 모델링, 발표 | [![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/lyc9872-lab) |
-| **이용혁** | 전처리 결과서, RandomForest 모델링 | [![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/leeyonghyok) |
-| **정형섭** | 학습 결과서, GradientBoosting 모델링 | [![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/jhs7067) |
-| **박연아** | 웹 화면 구현(Streamlit, HTML), XGBoost 모델링 | [![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/yeona9549) |
+</div>
+
 ---
+
 ## **프로젝트 명:** 고객 이탈(Churn) 예측 모델 구축을 위한 데이터 탐색
 
 **분석 데이터:** synthetic_customer_churn_100k.csv  
@@ -25,21 +46,21 @@
 
 ```
 SKN31-2nd-2Team
-├─ app.py                                                                   # streamlit 화면 구현
+├─ app.py                                          # streamlit 화면 구현
 ├─ data
-│  ├─ eda_plots                                                             # EDA 그래프 데이터 모음
-│  └─ synthetic_customer_churn_100k.csv                                     # 원본 데이터셋 (Raw Data)
+│  ├─ eda_plots                                    # EDA 그래프 데이터 모음
+│  └─ synthetic_customer_churn_100k.csv            # 원본 데이터셋 (Raw Data)
 ├─ models
-│  ├─ RandomForest                                                       # RandomForest 모델링 데이터
-│  ├─ GradientBoosting                                                   # GradientBoosting 모델링
-│  ├─ XGBoost                                                            # XGBoost 모델링 데이터
-│  ├─ DeepLearning                                                       # DeepLearning 모델링 데이터
-│  └─ LightGBM                                                              # LightGBM 모델링 데이터
+│  ├─ RandomForest                                 # RandomForest 모델링 데이터
+│  ├─ GradientBoosting                             # GradientBoosting 모델링
+│  ├─ XGBoost                                      # XGBoost 모델링 데이터
+│  ├─ DeepLearning                                 # DeepLearning 모델링 데이터
+│  └─ LightGBM                                     # LightGBM 모델링 데이터
 ├─ outputs
-│  ├─ 1_preprocessing_report.md                                             # 전처리 결과서
-│  ├─ 2_model_training_report.md                                            # 학습 결과서
+│  ├─ 1_preprocessing_report.md                    # 전처리 결과서
+│  ├─ 2_model_training_report.md                   # 학습 결과서
 │  └─ model_training_time_bar.png
-├─ README.md                                                                # 프로젝트 소개 및 데이터 명세서
+├─ README.md                                       # 프로젝트 소개 및 데이터 명세서
 └─ requirements.txt
 
 ```
@@ -49,7 +70,7 @@ SKN31-2nd-2Team
 <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white"/> <img src="https://img.shields.io/badge/PyTorch-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white"/> <img src="https://img.shields.io/badge/TensorFlow-FF6F00?style=for-the-badge&logo=tensorflow&logoColor=white"/> <img src="https://img.shields.io/badge/scikit--learn-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white"/> <img src="https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas&logoColor=white"/>
 
 ### 💻 Frontend
-<img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"/> <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white"/> <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white"/>
+<img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white"/> <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white"/>
 
 ### ⚙️ Backend
 <img src="https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white"/> 
@@ -60,8 +81,10 @@ SKN31-2nd-2Team
 ---
 ### WBS
 ---
-![alt text](image.png)
+<img src="image/WBS.png" width="70%">
+
 ---
+
 ## 1. 프로젝트 배경
 
 오늘날 이동통신 시장은 신규 고객 유치 비용(CAC, Customer Acquisition Cost)이 기존 고객을 유지하는 비용보다 수 배 이상 높게 발생하는 '성숙기·포화 시장'의 특성을 띄고 있습니다. 무제한 요금제 경쟁, 결합 상품 다변화, 그리고 다양한 알뜰폰(MVNO) 사업자의 등장은 고객이 언제든 더 나은 조건의 경쟁사로 번호이동을 할 수 있는 환경을 제공합니다. 
@@ -511,4 +534,14 @@ LightGBM의 Feature Importance를 바탕으로 보면, 고객 이탈 예측에�
 따라서 최종 모델은 LightGBM으로 선정하였다. LightGBM은 기본 전처리 기준에서 핵심 지표인 ROC-AUC가 가장 높았고, 실행 시간과 운영 효율성 측면에서도 가장 적합한 모델로 판단된다. 또한 Feature Importance를 통해 `MonthlyCharges`, `Tenure`, `TotalCharges`, `Age` 등 고객 이탈에 영향을 주는 주요 변수를 해석할 수 있어, 향후 고위험 고객군을 파악하고 이탈 방지 전략을 수립하는 데 활용할 수 있다.
 
 ## 12. 프로젝트 회고
+**김가율**  
+이번 프로젝트에서 PM을 맡으면서 부담감과 협업프로젝트 진행에 있어 어려움을 느꼈다.  LightGBM 모델링을 직접 해보면서 모델개발이 어떤식으로 진행되는지 확실하게 이해할 수 있었다.
 
+**이영창**
+
+**이용혁**  
+머신러닝 전 과정을 팀원들과 같이 구현해 볼 수 있어 유익했고 감사했습니다.
+
+**정형섭**
+
+**박연아**
