@@ -360,33 +360,7 @@ Target['Churn`] 변수를 LabelEcoder로 수치화(Yes=1, No=0)하여 연속형 
 
 ---
 
-### 2-2. 지표별 최고 성능 모델
-
-**1) 기본 전처리(음수값 0으로 변환, Label Encoding)**
-
-| 지표 | 최고 모델 | 값 |
-| --- | --- | ---: |
-| Accuracy (정확도) | LightGBM / Random Forest | 0.7600 |
-| Recall (재현율) | GradientBoosting | 0.7200 |
-| Precision (정밀도) | Random Forest | 0.7300 |
-| F1-Score | GradientBoosting / Random Forest | 0.7200 |
-| ROC-AUC | LightGBM | 0.8263 |
-
-<br />
-
-**2) 모델별 전처리 및 튜닝**
-
-| 지표 | 최고 모델 | 값 |
-| --- | --- | ---: |
-| Accuracy (정확도) | Random Forest | 0.7600 |
-| Recall (재현율) | Random Forest | 0.7100 |
-| Precision (정밀도) | Random Forest | 0.7300 |
-| F1-Score | Random Forest | 0.7200 |
-| ROC-AUC | Random Forest | 0.8069 |
-
----
-
-### 2-3. 최적 모델 선정
+### 2-2. 최적 모델 선정
 
 **선정 모델**: LightGBM
 
