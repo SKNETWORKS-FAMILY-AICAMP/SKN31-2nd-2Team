@@ -136,21 +136,6 @@ SKN31-2nd-2Team
 
 ※ 통신사 고객 이탈 가공 데이터의 시초는 IBM Cognos Analytics용 샘플 데이터로 제공된 Telco Customer Churn이다. 이후 Kaggle에서 비슷한 유형의 데이터셋을 찾아볼 수 있으며 synthetic_customer_churn_100k도 그중 하나다.
 
-### 4-1. 변수에 대한 설명
-
-| 컬럼명 | 설명 | 데이터 타입 | 예시 |
-|---|---|---|---|
-| CustomerID | 고객 고유 식별자 | int | 1, 2, …, 100000 |
-| Age | 고객 나이 (18–80세) | int | 51 |
-| Gender | 고객 성별 | string | Male / Female / Other |
-| Tenure | 서비스 이용 기간 (월, 1–72) | int | 58 |
-| MonthlyCharges | 월 청구 금액 (USD, 약 10–150) | float | 95.92 |
-| TotalCharges | 누적 청구 금액 (Tenure × MonthlyCharges + 노이즈) | float | 5530.46 |
-| Contract | 계약 유형 | string | 월별 / 1년 / 2년 |
-| PaymentMethod | 결제 수단 | string | 전자수표 / 우편수표 / 계좌이체 / 신용카드 |
-| Churn | 이탈 여부 (타깃 변수) | string | Yes / No |  
-<br>
-
 ## 5. 수치형 변수와 기초 통계량
 
 | 변수명 | 평균값 (Mean) | 중위값 (50%) | 최솟값 (Min) | 최댓값 (Max) | 주요 특징 분석 |
@@ -160,57 +145,7 @@ SKN31-2nd-2Team
 | **MonthlyCharges** (월요금) | 79.9달러 | 80.0달러 | 10.0달러 | 150.0달러 | 최소 10달러~최대 150달러 사이에서 월요금 청구 |
 | **TotalCharges** (총요금) | 2,926.1달러 | 2,268.0달러 | **-118.43달러** | 10,831.5달러 | **[오류 발견]** **총요금이 음수인 데이터(최소값: -118.43)** 가 존재 |
 
-## 5.1 수치형 변수의 도수분포표
-![alt text](data/eda_plots/02_numerical_distributions.png)
-
-## 5.2 수치형 변수의 Target 특성별 분포
-![alt text](data/eda_plots/02-1_numerical_distributions.png)
-- 가입기간이 짧을수록 이탈률이 높음
-- 월요금이 많을수록 이탈률이 
-
-# 6. 범주형 변수와 기초 통계량
-
-| 변수 | 범주 | 빈도 | 비율 | 주요 특징 분석 |
-|------|------|-----:|-----:|------|
-| **Gender** | Female | 48,256 | 48.26% | Female·Male 비율이 각각 약 48%로 균등한 분포 |
-| | Male | 47,787 | 47.79% | |
-| | Other | 3,957 | 3.96% | |
-| **Contract** | Month-to-month | 54,915 | 54.92% | 단기 계약(Month-to-month)이 과반수(54.92%)로 중장기 계약간 이탈률 차이가 있을 것으로 예상 |
-| | One year | 25,261 | 25.26% | |
-| | Two year | 19,824 | 19.82% | |
-| **PaymentMethod** | Electronic check | 34,892 | 34.89% | Electronic check가 34.89%로 가장 많고 나머지 3개 방식은 약 20%씩 고른 분포|
-| | Mailed check | 25,221 | 25.22% | |
-| | Credit card | 20,032 | 20.03% | |
-| | Bank transfer | 19,855 | 19.86% | |
-
-## 6.1 범주형 변수의 도수분포표
-![alt text](data/eda_plots/03_categorical_distributions.png)
-
-## 6.2 범주형 변수의 Target 특성별 비율
-![alt text](data/eda_plots/03-1_categorical_distributions.png)
-- 단기계약일수록 이탈률이 높음
-
-## 7. 타겟 변수(Churn) 분포 분석
-
-모델이 예측해야 하는 핵심 타겟 변수인 **고객 이탈 여부 (`Churn`)** 비율 분석
-![이탈 분포](data/eda_plots/01_churn_distribution.png)
-
-- **이탈하지 않은 고객 (No):** 66,856명 (**66.86%**)
-- **이탈한 고객 (Yes):** 33,144명 (**33.14%**)
-- **클래스 불균형 분석**<br>
-  - Telco의 이탈률은 **약 33%** 로 국내 통신 3사 실제 이탈률 보다 높은 편
-<br>
-
-  **국내 통신 3사 해지율**
-
-  | 연도 | SKT | KT | LGU+ | 출처 |
-  |------|----:|----:|-----:|------|
-  | 2021년 (연간, 월평균) | 0.83% | 1.43% | 1.36% | 서울경제 (2022.03.08) |
-  | 연간 환산 (×12) | ≈ 10.0% | ≈ 17.2% | ≈ 16.3% | — |
-
-<br>
-
-## 8. 변수 간 상관관계 분석 (Correlation Matrix)
+## 6. 변수 간 상관관계 분석 (Correlation Matrix)
 
 Target['Churn`] 변수를 LabelEcoder로 수치화(Yes=1, No=0)하여 연속형 변수 상관관계 분석
 ![상관관계](data/eda_plots/04_correlation_matrix.png)
@@ -239,7 +174,7 @@ Target['Churn`] 변수를 LabelEcoder로 수치화(Yes=1, No=0)하여 연속형 
   - 10 이상 : 심각 (제거 또는 결합 고려)
 <br>
 
-# 9. 결측치와 이상치 분석
+## 7. 결측치와 이상치 분석
 
 - **결측치 현황** 
   - 모든 변수의 Non-Null Count가 100,000개로 일치하여 결측치 미존재
@@ -250,21 +185,21 @@ Target['Churn`] 변수를 LabelEcoder로 수치화(Yes=1, No=0)하여 연속형 
 ![alt text](data/eda_plots/06_numerical_boxplots.png)
 
 
-## 10. 데이터 전처리
+## 8. 데이터 전처리
 
-## 10.1 이상치 처리
+## 8.1 이상치 처리
 
-### 10.1.1 TotalCharges(총요금)의 음수(-)값 처리
+### 8.1.1 TotalCharges(총요금)의 음수(-)값 처리
 - 총 100,000개 중 265개(0.265%)의 음수(-)가 존재
 - 환불, 프로모션 크레딧 또는 시스템 기록 오류 가능성
 - 전처리 방법
   1. 음수(-)를 0으로 대체
 
-### 10.1.2 TotalCharges(총요금)의 상한 이상치 처리
+### 8.1.2 TotalCharges(총요금)의 상한 이상치 처리
 - 총 100,000개 중 이상치 기준 상한인 9540.32를 벗어난 이상치가 841개(0.841%)가 존재
 - 장기 고객의 경우 나타나는 자연스러운 현상으로 LightGBM 모델에서 전처리 진행하지 않음
 
-## 10.2 Feature와 Target 분리(X, y 분리)
+## 8.2 Feature와 Target 분리(X, y 분리)
 
 - 총 컬럼(9개): CustomerID, Age, Gender, Tenure, MonthlyCharges, Contract, PaymentMethod, TotalCharges, Churn
   - CustomerID는 삭제
@@ -282,7 +217,7 @@ Target['Churn`] 변수를 LabelEcoder로 수치화(Yes=1, No=0)하여 연속형 
   | 변환 후 | 0 | 유지 | 66,856 |
   | 변환 후 | 1 | 이탈 | 33,144 |
 
-## 10.3 Train/Validation/Test set 분리
+## 8.3 Train/Validation/Test set 분리
 
 - train set(60%), validation set(20%), test set(20%)로 분리하여 데이터 준비
 
@@ -295,7 +230,7 @@ Target['Churn`] 변수를 LabelEcoder로 수치화(Yes=1, No=0)하여 연속형 
   | X_test | 20,000 |
   | y_test | 20,000 |
 
-## 10.4 참고 사항
+## 8.4 참고 사항
 
 **- 머신러닝에서의  Encoding과 Scaling 방법**
 
@@ -318,7 +253,7 @@ Target['Churn`] 변수를 LabelEcoder로 수치화(Yes=1, No=0)하여 연속형 
 \* 선형 알고리즘: Logistic Regression(Linear Regression), SVM, KNN<br>
 \* 트리형 알고리즘: Decision Tree, Random Forest, Gradient Boosing(XGBoost, LightGBM, CatBoost)
 
-## 10.7 향후 과제: 파생변수 생성을 통한 추가 분석
+## 8.7 향후 과제: 파생변수 생성을 통한 추가 분석
 
 - synthetic_customer_churn_100k 데이터 셋은  수치형(Numerical) 변수 4개(`Age`, `Tenure`, `MonthlyCharges`, `TotalCharges`)와 범주형(Categorical) 변수 3게(`Gender`, `Contract`, `PaymentMethod`) 구성된 features들로 target인 이탈를을 예측하려고 함.
 - features 수 부족이 target 예측력을 떨어뜨릴 수 있다는 가정하에 features 수 확대 방안 모색
@@ -340,7 +275,7 @@ Target['Churn`] 변수를 LabelEcoder로 수치화(Yes=1, No=0)하여 연속형 
   4. Tenure/(Age * 12개월)
       - 단순 가입기간보다는 생애주기에서 차지하는 가입기간 비율이 이탈률을 예축하는데 더 유의할 것이라는 가정하에 새로운 파생변수를 생성
 
-## 11. 모델 학습 결과
+## 9. 모델 학습 결과
 
 ## 1. 모델링 전략
 
@@ -525,7 +460,7 @@ LightGBM의 Feature Importance를 바탕으로 보면, 고객 이탈 예측에�
 
 따라서 최종 모델은 LightGBM으로 선정하였다. 또한 Feature Importance를 통해 `MonthlyCharges`, `Tenure`, `TotalCharges`, `Age` 등 고객 이탈에 영향을 주는 주요 변수를 해석할 수 있어, 향후 고위험 고객군을 파악하고 이탈 방지 전략을 수립하는 데 활용할 수 있다.
 
-## 12. 프로젝트 회고
+## 10. 프로젝트 회고
 **김가율**  
 이번 프로젝트에서 PM을 맡으면서 부담감과 협업프로젝트 진행에 있어 어려움을 느꼈다.  LightGBM 모델링을 직접 해보면서 모델개발이 어떤식으로 진행되는지 확실하게 이해할 수 있었다.
 
