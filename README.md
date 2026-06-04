@@ -27,6 +27,14 @@
     <td align="center">전처리 결과서<br>RandomForest</td>
     <td align="center">발표<br>Deeplearning</td>
   </tr>
+
+  <tr>
+    <td align="center"><a href="https://github.com/Kim-gayul"><img src="https://img.shields.io/badge/Kimgayul-181717?style=for-the-badge&logo=github&logoColor=white"></a></td>
+    <td align="center"><a href="https://github.com/jhs7067"><img src="https://img.shields.io/badge/jhs7067-181717?style=for-the-badge&logo=github&logoColor=white"></a></td>
+    <td align="center"><a href="https://github.com/yeona9549"><img src="https://img.shields.io/badge/yeona9549-181717?style=for-the-badge&logo=github&logoColor=white"></a></td>
+    <td align="center"><a href="https://github.com/leeyonghyok"><img src="https://img.shields.io/badge/leeyonghyok-181717?style=for-the-badge&logo=github&logoColor=white"></a></td>
+    <td align="center"><a href="https://github.com/lyc9872-lab"><img src="https://img.shields.io/badge/lyc9872lab-181717?style=for-the-badge&logo=github&logoColor=white"></a></td>
+  </tr>
   
 </table>
 
@@ -128,21 +136,6 @@ SKN31-2nd-2Team
 
 ※ 통신사 고객 이탈 가공 데이터의 시초는 IBM Cognos Analytics용 샘플 데이터로 제공된 Telco Customer Churn이다. 이후 Kaggle에서 비슷한 유형의 데이터셋을 찾아볼 수 있으며 synthetic_customer_churn_100k도 그중 하나다.
 
-### 4-1. 변수에 대한 설명
-
-| 컬럼명 | 설명 | 데이터 타입 | 예시 |
-|---|---|---|---|
-| CustomerID | 고객 고유 식별자 | int | 1, 2, …, 100000 |
-| Age | 고객 나이 (18–80세) | int | 51 |
-| Gender | 고객 성별 | string | Male / Female / Other |
-| Tenure | 서비스 이용 기간 (월, 1–72) | int | 58 |
-| MonthlyCharges | 월 청구 금액 (USD, 약 10–150) | float | 95.92 |
-| TotalCharges | 누적 청구 금액 (Tenure × MonthlyCharges + 노이즈) | float | 5530.46 |
-| Contract | 계약 유형 | string | 월별 / 1년 / 2년 |
-| PaymentMethod | 결제 수단 | string | 전자수표 / 우편수표 / 계좌이체 / 신용카드 |
-| Churn | 이탈 여부 (타깃 변수) | string | Yes / No |  
-<br>
-
 ## 5. 수치형 변수와 기초 통계량
 
 | 변수명 | 평균값 (Mean) | 중위값 (50%) | 최솟값 (Min) | 최댓값 (Max) | 주요 특징 분석 |
@@ -152,57 +145,7 @@ SKN31-2nd-2Team
 | **MonthlyCharges** (월요금) | 79.9달러 | 80.0달러 | 10.0달러 | 150.0달러 | 최소 10달러~최대 150달러 사이에서 월요금 청구 |
 | **TotalCharges** (총요금) | 2,926.1달러 | 2,268.0달러 | **-118.43달러** | 10,831.5달러 | **[오류 발견]** **총요금이 음수인 데이터(최소값: -118.43)** 가 존재 |
 
-## 5.1 수치형 변수의 도수분포표
-![alt text](data/eda_plots/02_numerical_distributions.png)
-
-## 5.2 수치형 변수의 Target 특성별 분포
-![alt text](data/eda_plots/02-1_numerical_distributions.png)
-- 가입기간이 짧을수록 이탈률이 높음
-- 월요금이 많을수록 이탈률이 
-
-# 6. 범주형 변수와 기초 통계량
-
-| 변수 | 범주 | 빈도 | 비율 | 주요 특징 분석 |
-|------|------|-----:|-----:|------|
-| **Gender** | Female | 48,256 | 48.26% | Female·Male 비율이 각각 약 48%로 균등한 분포 |
-| | Male | 47,787 | 47.79% | |
-| | Other | 3,957 | 3.96% | |
-| **Contract** | Month-to-month | 54,915 | 54.92% | 단기 계약(Month-to-month)이 과반수(54.92%)로 중장기 계약간 이탈률 차이가 있을 것으로 예상 |
-| | One year | 25,261 | 25.26% | |
-| | Two year | 19,824 | 19.82% | |
-| **PaymentMethod** | Electronic check | 34,892 | 34.89% | Electronic check가 34.89%로 가장 많고 나머지 3개 방식은 약 20%씩 고른 분포|
-| | Mailed check | 25,221 | 25.22% | |
-| | Credit card | 20,032 | 20.03% | |
-| | Bank transfer | 19,855 | 19.86% | |
-
-## 6.1 범주형 변수의 도수분포표
-![alt text](data/eda_plots/03_categorical_distributions.png)
-
-## 6.2 범주형 변수의 Target 특성별 비율
-![alt text](data/eda_plots/03-1_categorical_distributions.png)
-- 단기계약일수록 이탈률이 높음
-
-## 7. 타겟 변수(Churn) 분포 분석
-
-모델이 예측해야 하는 핵심 타겟 변수인 **고객 이탈 여부 (`Churn`)** 비율 분석
-![이탈 분포](data/eda_plots/01_churn_distribution.png)
-
-- **이탈하지 않은 고객 (No):** 66,856명 (**66.86%**)
-- **이탈한 고객 (Yes):** 33,144명 (**33.14%**)
-- **클래스 불균형 분석**<br>
-  - Telco의 이탈률은 **약 33%** 로 국내 통신 3사 실제 이탈률 보다 높은 편
-<br>
-
-  **국내 통신 3사 해지율**
-
-  | 연도 | SKT | KT | LGU+ | 출처 |
-  |------|----:|----:|-----:|------|
-  | 2021년 (연간, 월평균) | 0.83% | 1.43% | 1.36% | 서울경제 (2022.03.08) |
-  | 연간 환산 (×12) | ≈ 10.0% | ≈ 17.2% | ≈ 16.3% | — |
-
-<br>
-
-## 8. 변수 간 상관관계 분석 (Correlation Matrix)
+## 6. 변수 간 상관관계 분석 (Correlation Matrix)
 
 Target['Churn`] 변수를 LabelEcoder로 수치화(Yes=1, No=0)하여 연속형 변수 상관관계 분석
 ![상관관계](data/eda_plots/04_correlation_matrix.png)
@@ -231,7 +174,7 @@ Target['Churn`] 변수를 LabelEcoder로 수치화(Yes=1, No=0)하여 연속형 
   - 10 이상 : 심각 (제거 또는 결합 고려)
 <br>
 
-# 9. 결측치와 이상치 분석
+## 7. 결측치와 이상치 분석
 
 - **결측치 현황** 
   - 모든 변수의 Non-Null Count가 100,000개로 일치하여 결측치 미존재
@@ -242,21 +185,21 @@ Target['Churn`] 변수를 LabelEcoder로 수치화(Yes=1, No=0)하여 연속형 
 ![alt text](data/eda_plots/06_numerical_boxplots.png)
 
 
-## 10. 데이터 전처리
+## 8. 데이터 전처리
 
-## 10.1 이상치 처리
+## 8.1 이상치 처리
 
-### 10.1.1 TotalCharges(총요금)의 음수(-)값 처리
+### 8.1.1 TotalCharges(총요금)의 음수(-)값 처리
 - 총 100,000개 중 265개(0.265%)의 음수(-)가 존재
 - 환불, 프로모션 크레딧 또는 시스템 기록 오류 가능성
 - 전처리 방법
   1. 음수(-)를 0으로 대체
 
-### 10.1.2 TotalCharges(총요금)의 상한 이상치 처리
+### 8.1.2 TotalCharges(총요금)의 상한 이상치 처리
 - 총 100,000개 중 이상치 기준 상한인 9540.32를 벗어난 이상치가 841개(0.841%)가 존재
 - 장기 고객의 경우 나타나는 자연스러운 현상으로 LightGBM 모델에서 전처리 진행하지 않음
 
-## 10.2 Feature와 Target 분리(X, y 분리)
+## 8.2 Feature와 Target 분리(X, y 분리)
 
 - 총 컬럼(9개): CustomerID, Age, Gender, Tenure, MonthlyCharges, Contract, PaymentMethod, TotalCharges, Churn
   - CustomerID는 삭제
@@ -274,7 +217,7 @@ Target['Churn`] 변수를 LabelEcoder로 수치화(Yes=1, No=0)하여 연속형 
   | 변환 후 | 0 | 유지 | 66,856 |
   | 변환 후 | 1 | 이탈 | 33,144 |
 
-## 10.3 Train/Validation/Test set 분리
+## 8.3 Train/Validation/Test set 분리
 
 - train set(60%), validation set(20%), test set(20%)로 분리하여 데이터 준비
 
@@ -287,17 +230,7 @@ Target['Churn`] 변수를 LabelEcoder로 수치화(Yes=1, No=0)하여 연속형 
   | X_test | 20,000 |
   | y_test | 20,000 |
 
-
-## 10.4 OneHotEncoding과 labelEcoding
-- 범주형(categorical) 변수에 대해서는 LabelEncoding을 함
-- 참고 사항 참조
-
-
-## 10.5 Scaling
-- 수치형(numeric) 변수에 대해서는 별도의 Scaling를 하지 않음
-- 참고 사항 참조
-
-## 10.6 참고 사항
+## 8.4 참고 사항
 
 **- 머신러닝에서의  Encoding과 Scaling 방법**
 
@@ -320,7 +253,7 @@ Target['Churn`] 변수를 LabelEcoder로 수치화(Yes=1, No=0)하여 연속형 
 \* 선형 알고리즘: Logistic Regression(Linear Regression), SVM, KNN<br>
 \* 트리형 알고리즘: Decision Tree, Random Forest, Gradient Boosing(XGBoost, LightGBM, CatBoost)
 
-## 10.7 향후 과제: 파생변수 생성을 통한 추가 분석
+## 8.7 향후 과제: 파생변수 생성을 통한 추가 분석
 
 - synthetic_customer_churn_100k 데이터 셋은  수치형(Numerical) 변수 4개(`Age`, `Tenure`, `MonthlyCharges`, `TotalCharges`)와 범주형(Categorical) 변수 3게(`Gender`, `Contract`, `PaymentMethod`) 구성된 features들로 target인 이탈를을 예측하려고 함.
 - features 수 부족이 target 예측력을 떨어뜨릴 수 있다는 가정하에 features 수 확대 방안 모색
@@ -342,7 +275,7 @@ Target['Churn`] 변수를 LabelEcoder로 수치화(Yes=1, No=0)하여 연속형 
   4. Tenure/(Age * 12개월)
       - 단순 가입기간보다는 생애주기에서 차지하는 가입기간 비율이 이탈률을 예축하는데 더 유의할 것이라는 가정하에 새로운 파생변수를 생성
 
-## 11. 모델 학습 결과
+## 9. 모델 학습 결과
 
 ## 1. 모델링 전략
 
@@ -350,7 +283,6 @@ Target['Churn`] 변수를 LabelEcoder로 수치화(Yes=1, No=0)하여 연속형 
 
 본 프로젝트는 Telco 고객 이탈(Churn) 예측 문제를 다룬다.  
 평가지표는 Accuracy, Recall, Precision, F1-Score, ROC-AUC로 5개 지표를 선정하였다.
-최종 모델 선정에서는 ROC-AUC를 가장 중요하게 보고, Accuracy, Precision, Recall, F1-Score를 보조 지표로 함께 확인하였다. ROC-AUC는 모델이 이탈 가능성이 높은 고객과 낮은 고객을 얼마나 잘 구분하는지 보여주므로, 고객별 이탈 위험도를 판단하는 데 중요한 기준이 된다.
 
 | 지표 | 선정 이유 |
 | --------- | ------------------------------------ |
@@ -368,10 +300,10 @@ Target['Churn`] 변수를 LabelEcoder로 수치화(Yes=1, No=0)하여 연속형 
 
 | 모델 | 유형 | 선정 근거 |
 | ------------------- | ----- | ------------------------------------------ |
-| Random Forest | 앙상블 | 여러 Decision Tree를 결합해 안정적인 성능을 기대할 수 있고, Feature Importance를 통해 주요 변수를 해석할 수 있어 선정 |
-| Gradient Boosting | 부스팅 | 이전 모델의 오차를 순차적으로 보정하는 방식으로 정형 데이터 분류에서 성능 개선 가능성을 확인하기 위해 선정 |
-| XGBoost | 부스팅 | 정형 데이터 분류 문제에서 성능이 검증된 대표 부스팅 모델이므로, 튜닝을 통한 성능 향상 가능성을 비교하기 위해 선정 |
-| LightGBM | 부스팅 | 학습 속도와 메모리 효율이 좋아 데이터가 많아질 경우에도 운영 효율성을 기대할 수 있어 선정 |
+| Random Forest | 앙상블(배깅) | 여러 Decision Tree를 결합해 안정적인 성능을 기대할 수 있고, Feature Importance를 통해 주요 변수를 해석할 수 있어 선정 |
+| Gradient Boosting | 앙상블(부스팅) | 이전 모델의 오차를 순차적으로 보정하는 방식으로 정형 데이터 분류에서 성능 개선 가능성을 확인하기 위해 선정 |
+| XGBoost | 앙상블(부스팅) | 정형 데이터 분류 문제에서 성능이 검증된 대표 부스팅 모델이므로, 튜닝을 통한 성능 향상 가능성을 비교하기 위해 선정 |
+| LightGBM | 앙상블(부스팅) | 학습 속도와 메모리 효율이 좋아 데이터가 많아질 경우에도 운영 효율성을 기대할 수 있어 선정 |
 | Deep Learning | 신경망 | 트리 기반 모델과 다른 방식의 비선형 패턴 학습 가능성과 성능을 비교하기 위해 선정 |
 
 ---
@@ -383,9 +315,7 @@ Target['Churn`] 변수를 LabelEcoder로 수치화(Yes=1, No=0)하여 연속형 
 * 이후 각 담당자는 모델 특성에 맞는 추가 전처리와 하이퍼파라미터 튜닝을 적용하여 성능 개선 가능성을 확인한다.
 * 최종 비교에서는 기본 전처리 성능과 모델별 전처리 및 튜닝 성능을 함께 제시하여, 동일 조건에서의 모델 성능과 개별 최적화 후 성능을 모두 비교한다.
 * 모델 성능은 1-1에서 선정한 5개의 평가지표(Accuracy, Recall, Precision, F1-Score, ROC-AUC)를 기준으로 평가한다.
-* 성능 지표뿐만 아니라 각 튜닝 모델의 실행 시간도 함께 측정하여, 예측 성능과 학습 효율성을 모두 비교한다.
-* 최종 모델 선정 시에는 ROC-AUC를 핵심 성능 지표로 보고, 모델 간 성능 차이가 크지 않은 경우 실행 시간과 데이터 처리 효율성도 주요 선정 기준으로 함께 고려한다.
-
+* 최종 모델 선정 시에는 성능 지표뿐만 아니라 각 튜닝 모델의 실행 시간도 함께 측정하여, 예측 성능과 학습 효율성을 모두 비교한다.
 
 ---
 
@@ -395,10 +325,10 @@ Target['Churn`] 변수를 LabelEcoder로 수치화(Yes=1, No=0)하여 연속형 
 **1) 기본 전처리(음수값 0으로 변환, Label Encoding)** 
 | 순번 | 모델명 | Accuracy (정확도) | Recall (재현율) | Precision (정밀도) | F1-Score | ROC-AUC |
 | :---: | :--- | :---: | :---: | :---: | :---: | :---: |
-| **1** | **Random Forest** | **0.7600** | 0.7100 | **0.7300** | **0.7200** | 0.8045 |
-| **2** | **GradientBoosting** | 0.7515 | **0.7200** | 0.7200 | **0.7200** | 0.8051 |
+| **1** | **Random Forest** | 0.7600 | 0.7100 | 0.7300 | 0.7200 | 0.8045 |
+| **2** | **GradientBoosting** | 0.7515 | 0.7200 | 0.7200 | 0.7200 | 0.8051 |
 | **3** | **XGBoost** | 0.7082 | 0.6794 | 0.5483 | 0.6068 | 0.7982 |
-| **4** | **LightGBM** | **0.7600** | 0.5515 | 0.6668 | 0.6037 | **0.8263** |
+| **4** | **LightGBM** | 0.7600 | 0.5515 | 0.6668 | 0.6037 | 0.8263 |
 | **5** | **Deep Learning** | 0.7400 | 0.7100 | 0.7100 | 0.7100 | 0.7976 |
 
 <br />
@@ -406,7 +336,7 @@ Target['Churn`] 변수를 LabelEcoder로 수치화(Yes=1, No=0)하여 연속형 
 **2) 모델별 전처리 및 튜닝**
 | 순번 | 모델명 | Accuracy (정확도) | Recall (재현율) | Precision (정밀도) | F1-Score | ROC-AUC |
 | :---: | :--- | :---: | :---: | :---: | :---: | :---: |
-| **1** | **Random Forest** | **0.7600** | **0.7100** | **0.7300** | **0.7200** | **0.8069** |
+| **1** | **Random Forest** | 0.7600 | 0.7100 | 0.7300 | 0.7200 | 0.8069 |
 | **2** | **GradientBoosting** | 0.7555 | 0.6200 | 0.6400 | 0.6300 | 0.8062 |
 | **3** | **XGBoost** | 0.7260 | 0.6588 | 0.5757 | 0.6145 | 0.8038 |
 | **4** | **LightGBM** | 0.7528 | 0.6200 | 0.6300 | 0.6200 | 0.8055 |
@@ -425,49 +355,20 @@ Target['Churn`] 변수를 LabelEcoder로 수치화(Yes=1, No=0)하여 연속형 
 | Deep Learning | 66.06 | -->
 
 <p align="center">
-  <img src="data/model_training_time_bar.png" width="70%" alt="Tuned Model Training Time Comparison">
+  <img src="data/model_training_time_bar.png" width="80%" alt="Tuned Model Training Time Comparison">
 </p>
 
 ---
 
-### 2-2. 지표별 최고 성능 모델
-
-**1) 기본 전처리(음수값 0으로 변환, Label Encoding)**
-
-| 지표 | 최고 모델 | 값 |
-| --- | --- | ---: |
-| Accuracy (정확도) | LightGBM / Random Forest | 0.7600 |
-| Recall (재현율) | GradientBoosting | 0.7200 |
-| Precision (정밀도) | Random Forest | 0.7300 |
-| F1-Score | GradientBoosting / Random Forest | 0.7200 |
-| ROC-AUC | LightGBM | 0.8263 |
-
-<br />
-
-**2) 모델별 전처리 및 튜닝**
-
-| 지표 | 최고 모델 | 값 |
-| --- | --- | ---: |
-| Accuracy (정확도) | Random Forest | 0.7600 |
-| Recall (재현율) | Random Forest | 0.7100 |
-| Precision (정밀도) | Random Forest | 0.7300 |
-| F1-Score | Random Forest | 0.7200 |
-| ROC-AUC | Random Forest | 0.8069 |
-
----
-
-### 2-3. 최적 모델 선정
+### 2-2. 최적 모델 선정
 
 **선정 모델**: LightGBM
 
 **선정 근거**
 
-1. 기본 전처리 기준에서는 LightGBM이 ROC-AUC 0.8263으로 가장 높은 분류 구분력을 보였다. 본 프로젝트에서 ROC-AUC를 핵심 지표로 설정했기 때문에, 동일 전처리 조건에서 가장 높은 ROC-AUC를 기록한 LightGBM을 중요하게 평가하였다.
-2. 모델별 전처리 및 튜닝 기준에서는 Random Forest가 Accuracy 0.7600, ROC-AUC 0.8069, Precision 0.7300, Recall 0.7100, F1-Score 0.7200으로 가장 좋은 결과를 보였다. 따라서 단순 튜닝 성능만 보면 Random Forest도 충분히 경쟁력 있는 모델이다.
-3. 전체 결과를 보면 모델 간 점수 차이가 매우 크지는 않았다. 기본 전처리와 모델별 전처리 및 튜닝 결과 모두에서 상위 모델들의 Accuracy, ROC-AUC, F1-Score 차이가 근소했기 때문에, 단순히 특정 지표 하나의 우위만으로 최종 모델을 결정하기보다는 성능과 운영 효율을 함께 고려하였다.
-4. Random Forest는 여러 Decision Tree를 병렬적으로 많이 생성하는 방식이므로, 데이터가 더 많아지거나 트리 수가 증가할수록 학습 시간과 메모리 사용량이 커질 수 있다. 반면 LightGBM은 대용량 정형 데이터 처리에 최적화된 부스팅 모델로, 학습 속도와 메모리 효율 측면에서 강점이 있다.
-5. 향후 고객 데이터가 100,000건보다 더 커지거나, 정기적으로 재학습해야 하는 운영 환경을 고려하면 빠른 학습 속도와 효율적인 자원 사용이 중요하다. LightGBM은 이러한 확장성 측면에서 Random Forest보다 운영 부담이 적고, 반복 실험과 모델 개선에도 유리하다.
-6. 따라서 최종 모델은 공통 전처리 기준에서 핵심 지표인 ROC-AUC가 가장 높고, 데이터 증가 시 처리 속도와 메모리 효율, 운영 확장성 측면에서도 장점이 있는 LightGBM으로 선정하였다.
+1. 전체 결과를 보면 모델 간 점수 차이가 매우 크지는 않았다. 기본 전처리와 모델별 전처리 및 튜닝 결과 모두에서 상위 모델들의 평가지표 점수 차이가 유의미한 차이로 보이지 않아서, 단순히 평가 지표의 우위만으로 최종 모델을 결정하기보다는 10만개의 정형화 데이터 형태, 이탈 예측이라는 이진 분류 목적에 적합한지 고려하였다.
+2. 또한 향후 고객 데이터가 100,000건보다 더 커지거나, 정기적으로 재학습해야 하는 운영 환경을 고려하면 빠른 학습 속도와 효율적인 자원 사용이 중요하다. LightGBM은 이러한 확장성 측면에서 운영 부담이 적고, 반복 실험과 모델 개선에도 유리하다.
+3. 결과적으로 LightGBM이 대용량 정형 데이터 처리에 최적화된 트리기반 앙상블(부스팅) 모델이고, 학습과 추론에 걸리는 시간이 3초 내외로 다른 모델에 비해 가장 빠르게 측정 되었고, 메모리 효율 측면에서 강점이 있어 최종모델로 선정했습니다.
 
 ---
 
@@ -525,23 +426,27 @@ LightGBM의 Feature Importance를 바탕으로 보면, 고객 이탈 예측에�
 
 ## 4. 결론
 
-본 보고서에서는 Telco 고객 이탈 예측을 위해 Random Forest, Gradient Boosting, XGBoost, LightGBM, Deep Learning 총 5개 후보 모델을 학습하고 비교하였다. 평가는 Accuracy, Recall, Precision, F1-Score, ROC-AUC를 기준으로 진행하였으며, 이 중 고객별 이탈 위험도를 얼마나 잘 구분하는지 확인할 수 있는 ROC-AUC를 핵심 지표로 사용하였다.
+본 보고서에서는 Telco 고객 이탈 예측을 위해 Random Forest, Gradient Boosting, XGBoost, LightGBM, Deep Learning 총 5개 후보 모델을 학습하고 비교하였다. 평가는 Accuracy, Recall, Precision, F1-Score, ROC-AUC를 기준으로 진행하였다.
 
-실험은 기본 전처리 기준 성능과 모델별 전처리 및 튜닝 성능을 나누어 비교하였다. 기본 전처리 기준에서는 LightGBM이 ROC-AUC 0.8263으로 가장 높은 분류 구분력을 보였고, 모델별 전처리 및 튜닝 기준에서는 Random Forest가 주요 지표에서 가장 높은 성능을 보였다. 다만 전체적으로 모델 간 성능 차이는 크지 않았기 때문에, 최종 모델 선정에서는 성능뿐만 아니라 실행 시간과 데이터 처리 효율성도 함께 고려하였다.
+실험은 기본 전처리 기준 성능과 모델별 전처리 및 튜닝 성능을 나누어 비교하였다. 전체적으로 모델 간 성능 차이는 크지 않았기 때문에, 최종 모델 선정에서는 성능뿐만 아니라 실행 시간과 데이터 처리 효율성도 함께 고려하였다.
 
 튜닝 모델 실행 시간 비교 결과 LightGBM은 1.96초로 가장 빠른 실행 시간을 보였으며, Random Forest(85.04초), Gradient Boosting(69.98초), Deep Learning(66.06초)보다 학습 효율성이 높았다. 향후 데이터가 100,000건보다 더 많아지거나 정기적으로 재학습해야 하는 운영 환경을 고려하면, LightGBM의 빠른 학습 속도와 메모리 효율은 중요한 장점이 된다.
 
-따라서 최종 모델은 LightGBM으로 선정하였다. LightGBM은 기본 전처리 기준에서 핵심 지표인 ROC-AUC가 가장 높았고, 실행 시간과 운영 효율성 측면에서도 가장 적합한 모델로 판단된다. 또한 Feature Importance를 통해 `MonthlyCharges`, `Tenure`, `TotalCharges`, `Age` 등 고객 이탈에 영향을 주는 주요 변수를 해석할 수 있어, 향후 고위험 고객군을 파악하고 이탈 방지 전략을 수립하는 데 활용할 수 있다.
+따라서 최종 모델은 LightGBM으로 선정하였다. 또한 Feature Importance를 통해 `MonthlyCharges`, `Tenure`, `TotalCharges`, `Age` 등 고객 이탈에 영향을 주는 주요 변수를 해석할 수 있어, 향후 고위험 고객군을 파악하고 이탈 방지 전략을 수립하는 데 활용할 수 있다.
 
-## 12. 프로젝트 회고
+## 10. 프로젝트 회고
 **김가율**  
 이번 프로젝트에서 PM을 맡으면서 부담감과 협업프로젝트 진행에 있어 어려움을 느꼈다.  LightGBM 모델링을 직접 해보면서 모델개발이 어떤식으로 진행되는지 확실하게 이해할 수 있었다.
 
-**이영창**
+**이영창**  
+수업만으로는 이해가 잘 되지 않던 딥러닝모델을 직접 만들어 보면서 모델과 학습에 무엇이 필요한지, 어떤식으로 학습이 진행 되는지,
+또 학습에 걸리는 시간을 최소화 해야 보다 좋은 성능의 모델을 만들수 있겠다는걸 느끼게 되었습니다.
 
 **이용혁**  
 머신러닝 전 과정을 팀원들과 같이 구현해 볼 수 있어 유익했고 감사했습니다.
 
-**정형섭**
+**정형섭**  
+이번 프로젝트를 통해 막연했던 머신러닝 예측 프로그램의 구현 과정을 직접 경험하며 큰 흥미를 느꼈고, 앞으로도 더 깊이 공부하고, 개발해보고 싶어졌습니다.
 
-**박연아**
+**박연아**  
+막막하게만 느껴졌던 머신러닝이었지만, 맡은 파트를 끝까지 책임지며 한 단계 성장할 수 있었던 프로젝트였습니다. XGBoost를 활용해 머신러닝에 대한 이해를 넓힐 수 있었고, 팀원들과 함께 의미 있는 결과를 만들어낸 뜻깊은 시간이었습니다.😊
