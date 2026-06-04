@@ -27,6 +27,14 @@
     <td align="center">전처리 결과서<br>RandomForest</td>
     <td align="center">발표<br>Deeplearning</td>
   </tr>
+
+  <tr>
+    <td align="center"><a href="https://github.com/Kim-gayul"><img src="https://img.shields.io/badge/Kimgayul-181717?style=for-the-badge&logo=github&logoColor=white"></a></td>
+    <td align="center"><a href="https://github.com/jhs7067"><img src="https://img.shields.io/badge/jhs7067-181717?style=for-the-badge&logo=github&logoColor=white"></a></td>
+    <td align="center"><a href="https://github.com/yeona9549"><img src="https://img.shields.io/badge/yeona9549-181717?style=for-the-badge&logo=github&logoColor=white"></a></td>
+    <td align="center"><a href="https://github.com/leeyonghyok"><img src="https://img.shields.io/badge/leeyonghyok-181717?style=for-the-badge&logo=github&logoColor=white"></a></td>
+    <td align="center"><a href="https://github.com/lyc9872-lab"><img src="https://img.shields.io/badge/lyc9872lab-181717?style=for-the-badge&logo=github&logoColor=white"></a></td>
+  </tr>
   
 </table>
 
@@ -350,7 +358,6 @@ Target['Churn`] 변수를 LabelEcoder로 수치화(Yes=1, No=0)하여 연속형 
 
 본 프로젝트는 Telco 고객 이탈(Churn) 예측 문제를 다룬다.  
 평가지표는 Accuracy, Recall, Precision, F1-Score, ROC-AUC로 5개 지표를 선정하였다.
-최종 모델 선정에서는 ROC-AUC를 가장 중요하게 보고, Accuracy, Precision, Recall, F1-Score를 보조 지표로 함께 확인하였다. ROC-AUC는 모델이 이탈 가능성이 높은 고객과 낮은 고객을 얼마나 잘 구분하는지 보여주므로, 고객별 이탈 위험도를 판단하는 데 중요한 기준이 된다.
 
 | 지표 | 선정 이유 |
 | --------- | ------------------------------------ |
@@ -368,10 +375,10 @@ Target['Churn`] 변수를 LabelEcoder로 수치화(Yes=1, No=0)하여 연속형 
 
 | 모델 | 유형 | 선정 근거 |
 | ------------------- | ----- | ------------------------------------------ |
-| Random Forest | 앙상블 | 여러 Decision Tree를 결합해 안정적인 성능을 기대할 수 있고, Feature Importance를 통해 주요 변수를 해석할 수 있어 선정 |
-| Gradient Boosting | 부스팅 | 이전 모델의 오차를 순차적으로 보정하는 방식으로 정형 데이터 분류에서 성능 개선 가능성을 확인하기 위해 선정 |
-| XGBoost | 부스팅 | 정형 데이터 분류 문제에서 성능이 검증된 대표 부스팅 모델이므로, 튜닝을 통한 성능 향상 가능성을 비교하기 위해 선정 |
-| LightGBM | 부스팅 | 학습 속도와 메모리 효율이 좋아 데이터가 많아질 경우에도 운영 효율성을 기대할 수 있어 선정 |
+| Random Forest | 앙상블(배깅) | 여러 Decision Tree를 결합해 안정적인 성능을 기대할 수 있고, Feature Importance를 통해 주요 변수를 해석할 수 있어 선정 |
+| Gradient Boosting | 앙상블(부스팅) | 이전 모델의 오차를 순차적으로 보정하는 방식으로 정형 데이터 분류에서 성능 개선 가능성을 확인하기 위해 선정 |
+| XGBoost | 앙상블(부스팅) | 정형 데이터 분류 문제에서 성능이 검증된 대표 부스팅 모델이므로, 튜닝을 통한 성능 향상 가능성을 비교하기 위해 선정 |
+| LightGBM | 앙상블(부스팅) | 학습 속도와 메모리 효율이 좋아 데이터가 많아질 경우에도 운영 효율성을 기대할 수 있어 선정 |
 | Deep Learning | 신경망 | 트리 기반 모델과 다른 방식의 비선형 패턴 학습 가능성과 성능을 비교하기 위해 선정 |
 
 ---
@@ -383,9 +390,7 @@ Target['Churn`] 변수를 LabelEcoder로 수치화(Yes=1, No=0)하여 연속형 
 * 이후 각 담당자는 모델 특성에 맞는 추가 전처리와 하이퍼파라미터 튜닝을 적용하여 성능 개선 가능성을 확인한다.
 * 최종 비교에서는 기본 전처리 성능과 모델별 전처리 및 튜닝 성능을 함께 제시하여, 동일 조건에서의 모델 성능과 개별 최적화 후 성능을 모두 비교한다.
 * 모델 성능은 1-1에서 선정한 5개의 평가지표(Accuracy, Recall, Precision, F1-Score, ROC-AUC)를 기준으로 평가한다.
-* 성능 지표뿐만 아니라 각 튜닝 모델의 실행 시간도 함께 측정하여, 예측 성능과 학습 효율성을 모두 비교한다.
-* 최종 모델 선정 시에는 ROC-AUC를 핵심 성능 지표로 보고, 모델 간 성능 차이가 크지 않은 경우 실행 시간과 데이터 처리 효율성도 주요 선정 기준으로 함께 고려한다.
-
+* 최종 모델 선정 시에는 성능 지표뿐만 아니라 각 튜닝 모델의 실행 시간도 함께 측정하여, 예측 성능과 학습 효율성을 모두 비교한다.
 
 ---
 
@@ -462,12 +467,9 @@ Target['Churn`] 변수를 LabelEcoder로 수치화(Yes=1, No=0)하여 연속형 
 
 **선정 근거**
 
-1. 기본 전처리 기준에서는 LightGBM이 ROC-AUC 0.8263으로 가장 높은 분류 구분력을 보였다. 본 프로젝트에서 ROC-AUC를 핵심 지표로 설정했기 때문에, 동일 전처리 조건에서 가장 높은 ROC-AUC를 기록한 LightGBM을 중요하게 평가하였다.
-2. 모델별 전처리 및 튜닝 기준에서는 Random Forest가 Accuracy 0.7600, ROC-AUC 0.8069, Precision 0.7300, Recall 0.7100, F1-Score 0.7200으로 가장 좋은 결과를 보였다. 따라서 단순 튜닝 성능만 보면 Random Forest도 충분히 경쟁력 있는 모델이다.
-3. 전체 결과를 보면 모델 간 점수 차이가 매우 크지는 않았다. 기본 전처리와 모델별 전처리 및 튜닝 결과 모두에서 상위 모델들의 Accuracy, ROC-AUC, F1-Score 차이가 근소했기 때문에, 단순히 특정 지표 하나의 우위만으로 최종 모델을 결정하기보다는 성능과 운영 효율을 함께 고려하였다.
-4. Random Forest는 여러 Decision Tree를 병렬적으로 많이 생성하는 방식이므로, 데이터가 더 많아지거나 트리 수가 증가할수록 학습 시간과 메모리 사용량이 커질 수 있다. 반면 LightGBM은 대용량 정형 데이터 처리에 최적화된 부스팅 모델로, 학습 속도와 메모리 효율 측면에서 강점이 있다.
-5. 향후 고객 데이터가 100,000건보다 더 커지거나, 정기적으로 재학습해야 하는 운영 환경을 고려하면 빠른 학습 속도와 효율적인 자원 사용이 중요하다. LightGBM은 이러한 확장성 측면에서 Random Forest보다 운영 부담이 적고, 반복 실험과 모델 개선에도 유리하다.
-6. 따라서 최종 모델은 공통 전처리 기준에서 핵심 지표인 ROC-AUC가 가장 높고, 데이터 증가 시 처리 속도와 메모리 효율, 운영 확장성 측면에서도 장점이 있는 LightGBM으로 선정하였다.
+1. 전체 결과를 보면 모델 간 점수 차이가 매우 크지는 않았다. 기본 전처리와 모델별 전처리 및 튜닝 결과 모두에서 상위 모델들의 평가지표 점수 차이가 유의미한 차이로 보이지 않아서, 단순히 평가 지표의 우위만으로 최종 모델을 결정하기보다는 10만개의 정형화 데이터 형태, 이탈 예측이라는 이진 분류 목적에 적합한지 고려하였다.
+2. 또한 향후 고객 데이터가 100,000건보다 더 커지거나, 정기적으로 재학습해야 하는 운영 환경을 고려하면 빠른 학습 속도와 효율적인 자원 사용이 중요하다. LightGBM은 이러한 확장성 측면에서 운영 부담이 적고, 반복 실험과 모델 개선에도 유리하다.
+3. 결과적으로 LightGBM이 대용량 정형 데이터 처리에 최적화된 트리기반 앙상블(부스팅) 모델이고, 학습과 추론에 걸리는 시간이 3초 내외로 다른 모델에 비해 가장 빠르게 측정 되었고, 메모리 효율 측면에서 강점이 있어 최종모델로 선정했습니다.
 
 ---
 
@@ -525,13 +527,13 @@ LightGBM의 Feature Importance를 바탕으로 보면, 고객 이탈 예측에�
 
 ## 4. 결론
 
-본 보고서에서는 Telco 고객 이탈 예측을 위해 Random Forest, Gradient Boosting, XGBoost, LightGBM, Deep Learning 총 5개 후보 모델을 학습하고 비교하였다. 평가는 Accuracy, Recall, Precision, F1-Score, ROC-AUC를 기준으로 진행하였으며, 이 중 고객별 이탈 위험도를 얼마나 잘 구분하는지 확인할 수 있는 ROC-AUC를 핵심 지표로 사용하였다.
+본 보고서에서는 Telco 고객 이탈 예측을 위해 Random Forest, Gradient Boosting, XGBoost, LightGBM, Deep Learning 총 5개 후보 모델을 학습하고 비교하였다. 평가는 Accuracy, Recall, Precision, F1-Score, ROC-AUC를 기준으로 진행하였다.
 
-실험은 기본 전처리 기준 성능과 모델별 전처리 및 튜닝 성능을 나누어 비교하였다. 기본 전처리 기준에서는 LightGBM이 ROC-AUC 0.8263으로 가장 높은 분류 구분력을 보였고, 모델별 전처리 및 튜닝 기준에서는 Random Forest가 주요 지표에서 가장 높은 성능을 보였다. 다만 전체적으로 모델 간 성능 차이는 크지 않았기 때문에, 최종 모델 선정에서는 성능뿐만 아니라 실행 시간과 데이터 처리 효율성도 함께 고려하였다.
+실험은 기본 전처리 기준 성능과 모델별 전처리 및 튜닝 성능을 나누어 비교하였다. 전체적으로 모델 간 성능 차이는 크지 않았기 때문에, 최종 모델 선정에서는 성능뿐만 아니라 실행 시간과 데이터 처리 효율성도 함께 고려하였다.
 
 튜닝 모델 실행 시간 비교 결과 LightGBM은 1.96초로 가장 빠른 실행 시간을 보였으며, Random Forest(85.04초), Gradient Boosting(69.98초), Deep Learning(66.06초)보다 학습 효율성이 높았다. 향후 데이터가 100,000건보다 더 많아지거나 정기적으로 재학습해야 하는 운영 환경을 고려하면, LightGBM의 빠른 학습 속도와 메모리 효율은 중요한 장점이 된다.
 
-따라서 최종 모델은 LightGBM으로 선정하였다. LightGBM은 기본 전처리 기준에서 핵심 지표인 ROC-AUC가 가장 높았고, 실행 시간과 운영 효율성 측면에서도 가장 적합한 모델로 판단된다. 또한 Feature Importance를 통해 `MonthlyCharges`, `Tenure`, `TotalCharges`, `Age` 등 고객 이탈에 영향을 주는 주요 변수를 해석할 수 있어, 향후 고위험 고객군을 파악하고 이탈 방지 전략을 수립하는 데 활용할 수 있다.
+따라서 최종 모델은 LightGBM으로 선정하였다. 또한 Feature Importance를 통해 `MonthlyCharges`, `Tenure`, `TotalCharges`, `Age` 등 고객 이탈에 영향을 주는 주요 변수를 해석할 수 있어, 향후 고위험 고객군을 파악하고 이탈 방지 전략을 수립하는 데 활용할 수 있다.
 
 ## 12. 프로젝트 회고
 **김가율**  
