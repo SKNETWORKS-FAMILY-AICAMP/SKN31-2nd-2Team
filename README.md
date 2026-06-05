@@ -69,7 +69,8 @@ SKN31-2nd-2Team
 │  ├─ 2_model_training_report.md                   # 학습 결과서
 │  └─ model_training_time_bar.png
 ├─ README.md                                       # 프로젝트 소개 및 데이터 명세서
-└─ requirements.txt
+├─ requirements.txt
+└─ requirements_specification.txt                  # 요구사항 명세서
 
 ```
 ---
