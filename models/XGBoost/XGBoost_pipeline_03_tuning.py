@@ -101,7 +101,7 @@ def run_parameter_tuning():
     print(top_10.to_string())
     print("-" * 65)
 
-    output_csv = 'models/03_XGBoost/xgb_tuning_top10_results.csv'
+    output_csv = 'models/XGBoost/xgb_tuning_top10_results.csv'
     top_10.to_csv(output_csv, encoding='utf-8-sig')
     print(f"튜닝 결과 저장: '{output_csv}'\n")
 

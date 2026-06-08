@@ -32,8 +32,8 @@ from sklearn.metrics import (
 from XGBoost_pipeline_01_preprocessing import CATEGORICAL_COLUMNS, NUMERIC_COLUMNS
 
 # 저장할 파일 경로 (변경이 필요하면 여기서만 수정)
-MODEL_PATH     = 'models/03_XGBoost/saved_model/xgb_model.pkl'      # 학습 완료된 XGBoost 모델
-PROCESSOR_PATH = 'models/03_XGBoost/saved_model/xgb_processor.pkl'  # 전처리 객체 (app.py에서 새 고객 입력값 변환 시 사용)
+MODEL_PATH     = 'models/XGBoost/saved_model/xgb_model.pkl'      # 학습 완료된 XGBoost 모델
+PROCESSOR_PATH = 'models/XGBoost/saved_model/xgb_processor.pkl'  # 전처리 객체 (app.py에서 새 고객 입력값 변환 시 사용)
 
 
 def run_model_training_and_evaluation(X_train, X_test, y_train, y_test, processor, best_params=None):
@@ -121,7 +121,7 @@ def run_model_training_and_evaluation(X_train, X_test, y_train, y_test, processo
     plt.title('XGBoost Feature Importance for Churn Prediction', fontsize=14)
     plt.xlabel('Importance Score')
     plt.tight_layout()
-    plt.savefig('models/03_XGBoost/xgb_feature_importance.png', dpi=150)
+    plt.savefig('models/XGBoost/xgb_feature_importance.png', dpi=150)
     plt.close()
     print("피처 중요도 그래프 저장 완료: 'xgb_feature_importance.png'")
 

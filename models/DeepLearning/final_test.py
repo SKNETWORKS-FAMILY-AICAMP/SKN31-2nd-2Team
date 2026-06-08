@@ -4,7 +4,7 @@ from deep_learning_model import *
 from data_scaling import *
 
 path= ' ../../data/synthetic_customer_churn_100k.csv'
-model_path = "models/05_DeepLearning/saved_model/deep_model.pt"
+model_path = "models/DeepLearning/saved_model/deep_model.pt"
 train_loader, val_loader, test_loader = data_loaders(path, batch_size=128)
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
